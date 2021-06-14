@@ -16,7 +16,7 @@ class Level:
             for button in self.buttons:
                 button.handle_event(ButtonEvent.Click, mouse_pos)
 
-    def update(self):
+    def tick(self):
         pass
 
     def display_assets(self, renderer):
@@ -25,5 +25,5 @@ class Level:
         for btn in self.buttons:
             btn.draw(self.gameInstance.renderer)
 
-    def move_assets(self):
+    def move_assets(self, move_by):
         pass
