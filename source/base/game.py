@@ -1,5 +1,6 @@
-from classes.levels.mainmenulevel import *
+from source.levels.mainmenulevel import *
 import pygame
+import pytmx
 import time
 
 
@@ -13,35 +14,33 @@ class Game:
         self.defaultBackgroundColor = default_background_color
         self.level = None
         self.previous_level = None
-        self.start_time = 0.0
-        self.end_time = 0.0
+        self.delta_time = 0.0
 
     def start(self):
         self.running = True
         self.move_to_level(MainMenu(self))
-
-        delta = self.end_time - self.start_time
+        previous_time = time.time()
 
         while self.running:
+            time_now = time.time()
+            self.delta_time = (time_now - previous_time)
+            previous_time = time_now
+
             if self.level:
                 self.renderer.fill(self.level.background_color)
             else:
                 self.renderer.fill(self.defaultBackgroundColor)
 
             if self.level:
-                if delta > 0:
-                    self.level.tick(delta)
-                else:
-                    self.level.tick(0.0)
+                self.level.tick(self.delta_time)
 
             self.handle_events()
 
-            self.start_time = time.time()
             if self.level:
                 self.level.display_assets(self.renderer)
-            self.end_time = time.time()
-
             self.window.flip()
+
+            self.end_time = time.time()
 
         pygame.quit()
 

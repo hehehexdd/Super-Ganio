@@ -1,9 +1,9 @@
-from classes.buttons.startlevelbutton import *
-from classes.levels.base.level import *
-from classes.buttons.base.button import *
-from classes.buttons.playbutton import *
-from classes.buttons.exitbutton import *
-from classes.levels.maplevel import *
+from source.buttons.backbuttonwidget import BackButtonWidget
+from source.buttons.exitbutton import *
+from source.buttons.playbutton import PlayButton
+from source.buttons.startlevelbutton import StartLevelButton
+from source.levels.base.maplevel import *
+from source.levels.level1 import Level1
 
 
 class MainMenu(Level):
@@ -17,7 +17,7 @@ class MainMenu(Level):
         widget.add_button(PlayButton(True, True, 'Play', 60, owner=self, custom_data=[widget1]))
         widget.add_button(ExitButton(True, True, 'Exit', 60, owner=self))
 
-        widget1.add_button(StartLevelButton(True, True, 'Level1', 60, owner=self, custom_data=[MapLevel(self.game_instance)]))
+        widget1.add_button(StartLevelButton(True, True, 'Level1', 60, owner=self, custom_data=[Level1(self.game_instance)]))
         widget1.add_button(BackButtonWidget(True, True, 'Back', 60, owner=self, custom_data=[widget]))
 
         self.background_color = (0, 100+50, 70+50)

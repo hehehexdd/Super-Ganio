@@ -10,7 +10,7 @@ class Camera:
         self.offset = vec(0, 0)
         self.offset_float = vec(0, 0)
         self.screen_width, self.screen_height = screen_width, screen_height
-        self.const = vec(-self.screen_width / 2 + self.player.current_image.get_rect().width / 2, - self.player.ground_y + 20)
+        self.const = vec(-self.screen_width / 2 + self.player.current_image.get_rect().width / 2, -screen_height / 2 + self.player.current_image.get_rect().height / 2) #- self.player.ground_y + 20)
         self.method = None
 
     def set_method(self, method):

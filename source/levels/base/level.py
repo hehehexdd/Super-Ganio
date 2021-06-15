@@ -1,6 +1,6 @@
-from classes.buttons.base.button import *
-from classes.widgets.base.widget import *
-from classes.entities.base.entity import *
+from source.buttons.base.button import *
+from source.widgets.base.widget import *
+from source.entities.base.entity import *
 
 
 class Level:
@@ -32,6 +32,8 @@ class Level:
         for entity in self.entities:
             if entity.start_ticking:
                 entity.tick(delta_time)
+        if self.player:
+            self.player.tick(delta_time)
 
     def display_assets(self, renderer):
         for drawable in self.drawables:
@@ -40,9 +42,11 @@ class Level:
             self.current_widget.draw(self.game_instance.renderer)
 
     def check_collides_any(self, rect: tuple):
-        if self.surfaces:
-            for surface in self.surfaces:
-                if surface.get_rect().colliderect(rect):
+        if self.drawables:
+            for drawable in self.drawables:
+                temp = drawable.get_rect(bottomleft=self.drawables[drawable])
+                #print(self.drawables[drawable])
+                if temp.colliderect(rect):
                     return True
         return False
 

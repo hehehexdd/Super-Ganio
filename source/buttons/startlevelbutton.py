@@ -1,4 +1,4 @@
-from classes.buttons.base.button import Button
+from source.buttons.base.button import Button
 
 
 class StartLevelButton(Button):

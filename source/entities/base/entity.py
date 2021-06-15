@@ -1,4 +1,4 @@
-from classes.entities.camera import Camera
+from source.entities.camera import Camera
 
 
 class Entity:

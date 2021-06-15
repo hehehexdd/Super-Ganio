@@ -1,9 +1,8 @@
-from classes.buttons.base.button import *
-from classes.levels.base.level import *
-from classes.buttons.backbuttonwidget import *
+from source.buttons.base.button import *
+from source.base.game import *
 
 
-class PlayButton(Button):
+class ExitButton(Button):
     def __init__(self,
                  should_create_text: bool = True,
                  should_create_background: bool = False,
@@ -22,5 +21,4 @@ class PlayButton(Button):
                          position, background_color, background_hover_color, background_size, owner, custom_data)
 
     def on_click(self):
-        if self.custom_data:
-            self.owner.set_widget(self.custom_data[0])
+        self.owner.game_instance.stop()
