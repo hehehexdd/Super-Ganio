@@ -18,6 +18,9 @@ class Player(Entity):
 	def jump(self):
 		pass
 
+	def tick(self, delta_time):
+		pass
+
 	def handle_events(self, event):
 		if event.type == pygame.KEYDOWN:
 			if event.key == pygame.K_a:

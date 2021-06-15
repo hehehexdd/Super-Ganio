@@ -1,10 +1,12 @@
 from classes.buttons.base.button import *
 from classes.widgets.base.widget import *
+from classes.entities.base.Entity import *
 
 
 class Level:
     def __init__(self, instance: object):
         self.drawables = {}
+        self.entities = []
         self.current_widget = None
         self.previous_widget = None
         self.gameInstance = instance
@@ -18,8 +20,10 @@ class Level:
             if self.current_widget is not None:
                 self.current_widget.handle_event(ButtonEvent.Click, mouse_pos)
 
-    def tick(self):
-        pass
+    def tick(self, delta_time):
+        for entity in self.entities:
+            if entity.start_ticking:
+                entity.tick(delta_time)
 
     def display_assets(self, renderer):
         for drawable in self.drawables:

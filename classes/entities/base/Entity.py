@@ -10,6 +10,7 @@ class Entity():
 		self.jump_max_pos = self.y - jump_max_height 
 		self.started_jumping = False
 		self.enable_gravity = True
+		self.start_ticking = True
 
 	def move(self, value):
 		self.x += value
