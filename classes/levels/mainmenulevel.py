@@ -7,5 +7,6 @@ class MainMenu(Level):
     def __init__(self, instance):
         super().__init__(instance)
         screen_size = self.gameInstance.window.get_window_size()
-        quit_button = PlayButton(True, True, 'Play', 20, position=(screen_size[0]/2, screen_size[1]/2), owner=self)
-        self.buttons.append(quit_button)
+        widget = Widget((screen_size[0] / 2, screen_size[1] / 2), 5, 10, "Main menu")
+        widget.add_button(PlayButton(True, True, 'Play', 20, owner=self))
+        self.set_widget(widget)

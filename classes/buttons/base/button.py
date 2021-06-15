@@ -39,15 +39,15 @@ class Button:
         self.background_pos = ()
 
         self.setup(should_create_text,
-                    should_create_background,
-                    text,
-                    text_size,
-                    text_color,
-                    text_hover_color,
-                    position,
-                    background_color,
-                    background_hover_color,
-                    background_size)
+                   should_create_background,
+                   text,
+                   text_size,
+                   text_color,
+                   text_hover_color,
+                   position,
+                   background_color,
+                   background_hover_color,
+                   background_size)
 
     def setup(self,
               should_create_text: bool = True,
@@ -77,6 +77,15 @@ class Button:
             self.background_color = background_color
         elif should_create_text:
             self.text_pos = position
+
+    def get_rect(self) -> pygame.Rect:
+        if self.text is not None and self.background is None:
+            return self.text.get_rect(center=self.text_pos)
+        elif self.text is None and self.background is not None:
+            return self.background.get_rect(center=self.background_pos)
+        elif self.text is not None and self.background is not None:
+            return self.background.get_rect(center=self.background_pos)
+        return pygame.Rect(0, 0, 0, 0)
 
     def draw(self, renderer: pygame.surface.Surface):
         if self.background is not None:
