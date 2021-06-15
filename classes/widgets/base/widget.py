@@ -19,7 +19,7 @@ class Widget:
         self.owner = owner
 
         if len(title_text) > 0:
-            self.text = pygame.font.SysFont('ariel', text_size).render(title_text, True, text_color)
+            self.text = pygame.font.SysFont('arial', text_size).render(title_text, True, text_color)
             self.start_pos = (self.start_pos[0], self.start_pos[1] + (self.text.get_rect().height / 2) + self.space_between_title_and_first_item + 10)
 
     def add_button(self, button: Button):

@@ -1,15 +1,18 @@
 from classes.buttons.base.button import *
 from classes.widgets.base.widget import *
-from classes.entities.base.Entity import *
+from classes.entities.base.entity import *
 
 
 class Level:
     def __init__(self, instance: object):
         self.drawables = {}
+        self.surfaces = []
         self.entities = []
+        self.player = None
         self.current_widget = None
         self.previous_widget = None
-        self.gameInstance = instance
+        self.game_instance = instance
+        self.background_color = (0, 0, 0, 255)
 
     def handle_events(self, event: pygame.event.Event):
         mouse_pos = pygame.mouse.get_pos()
@@ -20,6 +23,11 @@ class Level:
             if self.current_widget is not None:
                 self.current_widget.handle_event(ButtonEvent.Click, mouse_pos)
 
+        self.post_handle_events(event)
+
+    def post_handle_events(self, event: pygame.event.Event):
+        pass
+
     def tick(self, delta_time):
         for entity in self.entities:
             if entity.start_ticking:
@@ -29,10 +37,14 @@ class Level:
         for drawable in self.drawables:
             renderer.blit(drawable, self.drawables.get(drawable))
         if self.current_widget is not None:
-            self.current_widget.draw(self.gameInstance.renderer)
+            self.current_widget.draw(self.game_instance.renderer)
 
-    def move_assets(self, move_by):
-        pass
+    def check_collides_any(self, rect: tuple):
+        if self.surfaces:
+            for surface in self.surfaces:
+                if surface.get_rect().colliderect(rect):
+                    return True
+        return False
 
     def set_widget(self, widget: Widget):
         self.previous_widget = self.current_widget
@@ -40,3 +52,4 @@ class Level:
 
     def remove_widget(self):
         self.current_widget = None
+

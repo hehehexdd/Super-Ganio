@@ -15,13 +15,12 @@ class PlayButton(Button):
                  background_color=(127, 127, 127, 255),
                  background_hover_color=(177, 177, 177, 255),
                  background_size: tuple[int, int] = (100, 100),
-                 owner: object = None):
+                 owner: object = None,
+                 custom_data: list = None):
 
         super().__init__(should_create_text, should_create_background, text, text_size, text_color, text_hover_color,
-                         position, background_color, background_hover_color, background_size, owner)
+                         position, background_color, background_hover_color, background_size, owner, custom_data)
 
     def on_click(self):
-        widget = Widget((self.owner.gameInstance.window.get_window_size()[0] / 2,
-                         self.owner.gameInstance.window.get_window_size()[1] / 2), 5, 10, "Select a map")
-        widget.add_button(BackButtonWidget(True, True, 'Back', 20, owner=self.owner))
-        self.owner.set_widget(widget)
+        if self.custom_data:
+            self.owner.set_widget(self.custom_data[0])

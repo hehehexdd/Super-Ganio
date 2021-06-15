@@ -13,10 +13,11 @@ class BackButton(Button):
                  background_color=(127, 127, 127, 255),
                  background_hover_color=(177, 177, 177, 255),
                  background_size: tuple[int, int] = (100, 100),
-                 owner: object = None):
+                 owner: object = None,
+                 custom_data: list = None):
 
         super().__init__(should_create_text, should_create_background, text, text_size, text_color, text_hover_color,
-                         position, background_color, background_hover_color, background_size, owner)
+                         position, background_color, background_hover_color, background_size, owner, custom_data)
 
     def on_click(self):
         self.owner.gameInstance.move_to_level(self.owner.gameInstance.previous_level)

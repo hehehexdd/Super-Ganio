@@ -19,7 +19,8 @@ class Button:
                  background_color=(127, 127, 127, 255),
                  background_hover_color=(177, 177, 177, 255),
                  background_size: tuple[int, int] = (100, 100),
-                 owner: object = None):
+                 owner: object = None,
+                 custom_data: list = None):
 
         self.arguments_passed = [should_create_text,
                                  should_create_background,
@@ -37,7 +38,7 @@ class Button:
         self.background = None
         self.background_color = ()
         self.background_pos = ()
-
+        self.custom_data = custom_data
         self.setup(should_create_text,
                    should_create_background,
                    text,

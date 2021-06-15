@@ -1,8 +1,7 @@
-from classes.buttons.base.button import *
-from classes.base.game import *
+from classes.buttons.base.button import Button
 
 
-class ExitButton(Button):
+class StartLevelButton(Button):
     def __init__(self,
                  should_create_text: bool = True,
                  should_create_background: bool = False,
@@ -21,4 +20,5 @@ class ExitButton(Button):
                          position, background_color, background_hover_color, background_size, owner, custom_data)
 
     def on_click(self):
-        self.owner.game_instance.stop()
+        if self.custom_data:
+            self.owner.game_instance.move_to_level(self.custom_data[0])
