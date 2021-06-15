@@ -1,3 +1,7 @@
+import pygame
+from classes.entities.base.Entity import *
+
+
 class Player(Entity):
 
 	LIVES = 3
@@ -11,7 +15,7 @@ class Player(Entity):
 	def move(self, value):
 		self.level_instance.move_assets(value)
 
-	def jump():
+	def jump(self):
 		pass
 
 	def handle_events(self, event):

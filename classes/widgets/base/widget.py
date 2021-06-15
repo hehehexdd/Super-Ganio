@@ -24,7 +24,7 @@ class Widget:
 
     def add_button(self, button: Button):
         if len(self.buttons) > 0:
-            last_button_rect = self.buttons[-1].get_rect()
+            last_button_rect = self.buttons[len(self.buttons) - 1].get_rect()
             new_pos = (last_button_rect.centerx, last_button_rect.centery + (last_button_rect.height / 2) + self.space_between_items)
             #re-setup button with new position
             button.setup(button.arguments_passed[0],
@@ -48,7 +48,7 @@ class Widget:
                          button.arguments_passed[7],
                          button.arguments_passed[8],
                          button.arguments_passed[9])
-            self.buttons.append(button)
+        self.buttons.append(button)
 
     def draw(self, renderer: pygame.surface.Surface):
         if self.text is not None:

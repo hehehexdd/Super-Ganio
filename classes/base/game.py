@@ -36,3 +36,6 @@ class Game:
     def move_to_level(self, level):
         self.previous_level = self.level
         self.level = level
+
+    def stop(self):
+        self.running = False

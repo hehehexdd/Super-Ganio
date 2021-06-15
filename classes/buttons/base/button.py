@@ -78,7 +78,7 @@ class Button:
         elif should_create_text:
             self.text_pos = position
 
-    def get_rect(self) -> pygame.Rect:
+    def get_rect(self):
         if self.text is not None and self.background is None:
             return self.text.get_rect(center=self.text_pos)
         elif self.text is None and self.background is not None:
