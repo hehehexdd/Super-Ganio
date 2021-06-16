@@ -24,7 +24,7 @@ class MapLevel(Level):
                 if object_tile.name == 'player':
                     # player_animations = self.setup_player_resources()
                     player_images = {
-                        "idle": [pygame.image.load("D:/MikeS/Uni/4th Semester/Python/Project/assets/images/player/player.png")]
+                        "idle": [pygame.image.load("D:/Projects/Projects/Python projects/Projects/Super-Ganio_OLD/Super-Ganio/assets/images/player/player.png")]
                     }
                     #     "idle": player_animations[0],
                     #     "jump": player_animations[1],

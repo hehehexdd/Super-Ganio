@@ -9,12 +9,12 @@ class BackButtonWidget(Button):
                  text_size: int = 18,
                  text_color=(233, 233, 233, 255),
                  text_hover_color=(255, 255, 255, 255),
-                 position: tuple[int, int] = (0, 0),
+                 position = (0, 0),
                  background_color=(127, 127, 127, 255),
                  background_hover_color=(177, 177, 177, 255),
-                 background_size: tuple[int, int] = (100, 100),
+                 background_size = (100, 100),
                  owner: object = None,
-                 custom_data: list = None):
+                 custom_data = None):
 
         super().__init__(should_create_text, should_create_background, text, text_size, text_color, text_hover_color,
                          position, background_color, background_hover_color, background_size, owner, custom_data)
