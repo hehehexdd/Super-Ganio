@@ -5,10 +5,10 @@ from source.entities.base.entity import *
 
 class Level:
     def __init__(self, instance: object):
-        self.surfaces = {}
-        self.surface_offset = [0, 0]
+        self.collisions = []
         self.entities = []
         self.player = None
+        self.camera = None
         self.current_widget = None
         self.previous_widget = None
         self.game_instance = instance
@@ -28,16 +28,26 @@ class Level:
     def post_handle_events(self, event: pygame.event.Event):
         pass
 
+    def hidden_tick(self, delta_time):
+        pass
+
     def tick(self, delta_time):
         for entity in self.entities:
             if entity.start_ticking:
                 entity.tick(delta_time)
         if self.player:
-            self.player.tick(delta_time)
+            if self.player.start_ticking:
+                self.player.tick(delta_time)
+        self.hidden_tick(delta_time)
 
-    def display_assets(self, renderer):
+    def post_draw(self, renderer):
+        self.draw(renderer)
+
         if self.current_widget is not None:
             self.current_widget.draw(self.game_instance.renderer)
+
+    def draw(self, renderer):
+        pass
 
     def check_collides_any(self, rect: tuple):
         for surface in self.surfaces:

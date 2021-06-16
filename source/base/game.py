@@ -10,10 +10,10 @@ class Game:
         self.window = pygame.display
         self.window.set_caption("Super Ganio!")
         self.renderer = self.window.set_mode(window_size)
-        self.running = False
         self.defaultBackgroundColor = default_background_color
-        self.level = None
-        self.previous_level = None
+        self.running = False
+        self.last_level = None
+        self.current_level = None
         self.delta_time = 0.0
 
     def start(self):
@@ -26,21 +26,9 @@ class Game:
             self.delta_time = (time_now - previous_time)
             previous_time = time_now
 
-            if self.level:
-                self.renderer.fill(self.level.background_color)
-            else:
-                self.renderer.fill(self.defaultBackgroundColor)
-
-            if self.level:
-                self.level.tick(self.delta_time)
-
             self.handle_events()
-
-            if self.level:
-                self.level.display_assets(self.renderer)
-            self.window.flip()
-
-            self.end_time = time.time()
+            self.tick(self.delta_time)
+            self.draw(self.renderer)
 
         pygame.quit()
 
@@ -48,12 +36,27 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-            if self.level:
-                self.level.handle_events(event)
+            elif self.current_level:
+                self.current_level.handle_events(event)
+
+    def tick(self, delta_time):
+        if self.current_level:
+            self.current_level.tick(delta_time)
+
+    def draw(self, renderer):
+        if self.current_level:
+            self.renderer.fill(self.current_level.background_color)
+        else:
+            self.renderer.fill(self.defaultBackgroundColor)
+
+        if self.current_level:
+            self.current_level.post_draw(self.renderer)
+
+        self.window.flip()
 
     def move_to_level(self, level):
-        self.previous_level = self.level
-        self.level = level
+        self.last_level = self.current_level
+        self.current_level = level
 
     def stop(self):
         self.running = False

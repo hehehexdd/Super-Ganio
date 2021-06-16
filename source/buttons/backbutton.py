@@ -20,4 +20,4 @@ class BackButton(Button):
                          position, background_color, background_hover_color, background_size, owner, custom_data)
 
     def on_click(self):
-        self.owner.gameInstance.move_to_level(self.owner.gameInstance.previous_level)
+        self.owner.gameInstance.move_to_level(self.owner.gameInstance.last_level)

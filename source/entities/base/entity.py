@@ -1,14 +1,13 @@
-from source.entities.camera import Camera
+from source.base.camera import *
 
 
 class Entity:
-	def __init__(self, x, y, level_instance, images: list, jump_max_height, owner: object):
-		self.owner = owner
+	def __init__(self, x, y, level_instance, images: dict, jump_max_height):
 		self.level_instance = level_instance
 		self.x = x
 		self.y = y
 		self.images = images
-		self.current_image = self.images[0]
+		self.current_image = self.images['idle'][0]
 		self.jump_max_height = jump_max_height
 		self.jump_max_pos = self.y - jump_max_height 
 		self.started_jumping = False
@@ -16,13 +15,14 @@ class Entity:
 		self.start_ticking = True
 
 	def move(self, value):
-		self.x += value
+		pass
 
 	def jump(self, value):
-		if self.y > self.jump_max_pos:
-			self.y += value
-		else:
-			self.enable_gravity = True
+		pass
+		# if self.y > self.jump_max_pos:
+		# 	self.y += value
+		# else:
+		# 	self.enable_gravity = True
 
 	def calc_jump_point(self):
 		if not self.started_jumping:
@@ -32,8 +32,11 @@ class Entity:
 	def handle_events(self, event):
 		pass
 
-	def draw(self, renderer):
-		renderer.blit(self.current_image, (self.x, self.y))
-
 	def tick(self, delta_time):
 		pass
+
+	def draw(self, renderer, camera):
+		rect = self.current_image.get_rect()
+		if isinstance(camera, Camera):
+			rect = camera.apply_rect(rect)
+		renderer.blit(self.current_image, rect)

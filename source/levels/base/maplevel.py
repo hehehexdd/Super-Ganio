@@ -1,7 +1,9 @@
 from source.base.map import Map
-from source.levels.base.level import *
-from source.entities.camera import *
 from source.entities.player import *
+from source.base.camera import *
+import os
+import pygame
+from pathlib import Path
 
 
 class MapLevel(Level):
@@ -9,31 +11,68 @@ class MapLevel(Level):
         super().__init__(instance)
         self.map = None
         self.surface = None
-        self.map_last_pos = [0, 0]
 
-    def create_map(self, filename):
-        self.map = Map(filename, self)
+    def setup_assets(self, filename):
+        self.map = Map(filename)
         self.surface = self.map.make_map()
-        self.map_last_pos[0] = self.surface.get_rect(bottomleft=(0, self.game_instance.renderer.get_rect().height)).topleft[0]
-        self.map_last_pos[1] = self.surface.get_rect(bottomleft=(0, self.game_instance.renderer.get_rect().height)).topleft[1] - 100
-        self.surface_offset[0] = self.surface.get_rect().topleft[0] - self.map_last_pos[0]
-        self.surface_offset[1] = self.surface.get_rect().topleft[1] - self.map_last_pos[1]
 
-    def display_assets(self, renderer):
         if self.map:
-            if self.player:
-                self.player.apply_camera_movement(self.map_last_pos, self.surfaces)
-            #surface_rect = self.surface.get_rect(bottomleft=self.map_last_pos)
-            renderer.blit(self.surface, self.map_last_pos)
-            for surface in self.surfaces:
-                renderer.blit(surface, self.surfaces[surface])
-        for entity in self.entities:
-            entity.draw(renderer)
-        if self.player is not None:
-            self.player.draw(renderer)
-        if self.current_widget is not None:
-            self.current_widget.draw(self.game_instance.renderer)
+            self.collisions = []
+            for object_tile in self.map.tmxdata.objects:
+                if object_tile.name == 'collision':
+                    self.collisions.append(pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height))
+                if object_tile.name == 'player':
+                    # player_animations = self.setup_player_resources()
+                    player_images = {
+                        "idle": [pygame.image.load("D:/MikeS/Uni/4th Semester/Python/Project/assets/images/player/player.png")]
+                    }
+                    #     "idle": player_animations[0],
+                    #     "jump": player_animations[1],
+                    #     "move": player_animations[2]
+                    # }
+                    self.camera = Camera(self.map.width, self.map.height, self.game_instance.window)
+                    self.player = Player(object_tile.x, object_tile.y, self, player_images, 20, 200)
+                    print(object_tile.x, object_tile.y)
+
+    def setup_player_resources(self):
+        # get idle animations and load them
+        idle_anims = []
+        player_anim_path = "./assets/images/player"
+        idle_anim_path = player_anim_path + "/idle/"
+        idle_anim_files = os.listdir(idle_anim_path)
+        for file in idle_anim_files:
+            idle_anims.append(pygame.image.load(idle_anim_path + file))
+
+        jump_anims = []
+        jump_anim_path = player_anim_path + "/jump/"
+        jump_anim_files = os.listdir(jump_anim_path)
+        for file in jump_anim_files:
+            jump_anims.append(pygame.image.load(jump_anim_path + file))
+
+        move_anims = []
+        move_anim_path = player_anim_path + "/move/"
+        move_anim_files = os.listdir(move_anim_path)
+        for file in move_anim_files:
+            move_anims.append(pygame.image.load(move_anim_path + file))
+
+        return [idle_anims, jump_anims, move_anims]
 
     def post_handle_events(self, event: pygame.event.Event):
-        if self.player is not None:
+        if self.player:
             self.player.handle_events(event)
+
+    def hidden_tick(self, delta_time):
+        pass
+
+    def draw(self, renderer):
+        if self.camera:
+            self.camera.update(self.player.current_image.get_rect(topleft=(self.player.x, self.player.y)))
+        if self.map:
+            surface_rect = self.surface.get_rect()
+            if self.camera:
+                surface_rect = self.camera.apply_rect(surface_rect)
+            renderer.blit(self.surface, surface_rect)
+        for entity in self.entities:
+            entity.draw(renderer, self.camera)
+        if self.player:
+            self.player.draw(renderer, self.camera)
