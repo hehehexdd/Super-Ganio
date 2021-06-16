@@ -21,13 +21,13 @@ class Player(Entity):
 		self.moving_down_direction = 1
 		self.movement_add_up = [0, 0]
 
-	def apply_camera_movement(self, map_pos, drawables: list):
+	def apply_camera_movement(self, map_pos, surfaces: dict):
 		map_pos[0] += self.movement_add_up[0]
 		map_pos[1] += self.movement_add_up[1]
 
-		for drawable in drawables:
-			drawables[drawable][0] += self.movement_add_up[0]
-			drawables[drawable][1] += self.movement_add_up[1]
+		for drawable in surfaces:
+			surfaces[drawable][0] += self.movement_add_up[0]
+			surfaces[drawable][1] += self.movement_add_up[1]
 
 		self.movement_add_up = [0, 0]
 
@@ -42,10 +42,10 @@ class Player(Entity):
 			self.add_movement(-value, 0)
 
 	def move_down(self, value, ):
-		if not self.owner.check_collides_any(self.current_image.get_rect(bottomleft=(self.x, (self.y + value)))):
-			new_pos = value
-			self.y += new_pos
-			self.add_movement(0, -value)
+		#if not self.owner.check_collides_any(self.current_image.get_rect(bottomleft=(self.x, (self.y + value)))):
+		new_pos = value
+		self.y += new_pos
+		self.add_movement(0, -value)
 
 	def draw(self, renderer: pygame.Surface):
 		renderer.blit(self.current_image, renderer.get_rect().center)

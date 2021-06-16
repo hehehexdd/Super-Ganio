@@ -14,16 +14,19 @@ class MapLevel(Level):
     def create_map(self, filename):
         self.map = Map(filename, self)
         self.surface = self.map.make_map()
-        self.map_last_pos[0] = self.surface.get_rect(bottomleft=(0, self.game_instance.renderer.get_rect().height)).bottomleft[0]
-        self.map_last_pos[1] = self.surface.get_rect(bottomleft=(0, self.game_instance.renderer.get_rect().height)).bottomleft[1] - 50
+        self.map_last_pos[0] = self.surface.get_rect(bottomleft=(0, self.game_instance.renderer.get_rect().height)).topleft[0]
+        self.map_last_pos[1] = self.surface.get_rect(bottomleft=(0, self.game_instance.renderer.get_rect().height)).topleft[1] - 100
+        self.surface_offset[0] = self.surface.get_rect().topleft[0] - self.map_last_pos[0]
+        self.surface_offset[1] = self.surface.get_rect().topleft[1] - self.map_last_pos[1]
 
     def display_assets(self, renderer):
         if self.map:
             if self.player:
-                self.player.apply_camera_movement(self.map_last_pos, self.drawables)
-            surface_rect = self.surface.get_rect(bottomleft=self.map_last_pos)
-            self.surface_offset = surface_rect.bottomleft
-            renderer.blit(self.surface, surface_rect)
+                self.player.apply_camera_movement(self.map_last_pos, self.surfaces)
+            #surface_rect = self.surface.get_rect(bottomleft=self.map_last_pos)
+            renderer.blit(self.surface, self.map_last_pos)
+            for surface in self.surfaces:
+                renderer.blit(surface, self.surfaces[surface])
         for entity in self.entities:
             entity.draw(renderer)
         if self.player is not None:

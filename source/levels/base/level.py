@@ -5,8 +5,8 @@ from source.entities.base.entity import *
 
 class Level:
     def __init__(self, instance: object):
-        self.drawables = {}
-        self.surface_offset = ()
+        self.surfaces = {}
+        self.surface_offset = [0, 0]
         self.entities = []
         self.player = None
         self.current_widget = None
@@ -36,20 +36,14 @@ class Level:
             self.player.tick(delta_time)
 
     def display_assets(self, renderer):
-        for drawable in self.drawables:
-            renderer.blit(drawable, self.drawables.get(drawable))
         if self.current_widget is not None:
             self.current_widget.draw(self.game_instance.renderer)
 
     def check_collides_any(self, rect: tuple):
-        if self.drawables:
-            for drawable in self.drawables:
-                temp = drawable.get_rect(bottomleft=self.drawables[drawable])
-                #print(temp.topleft)
-                if temp.colliderect(rect):
-                    return True
-        else:
-            return False
+        for surface in self.surfaces:
+            if surface.get_rect(topleft=self.surfaces[surface]).colliderect(rect):
+                return True
+        return False
 
     def set_widget(self, widget: Widget):
         self.previous_widget = self.current_widget
