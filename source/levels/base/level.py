@@ -6,7 +6,7 @@ from source.entities.base.entity import *
 class Level:
     def __init__(self, instance: object):
         self.drawables = {}
-        self.surfaces = []
+        self.surface_offset = ()
         self.entities = []
         self.player = None
         self.current_widget = None
@@ -45,10 +45,11 @@ class Level:
         if self.drawables:
             for drawable in self.drawables:
                 temp = drawable.get_rect(bottomleft=self.drawables[drawable])
-                #print(self.drawables[drawable])
+                #print(temp.topleft)
                 if temp.colliderect(rect):
                     return True
-        return False
+        else:
+            return False
 
     def set_widget(self, widget: Widget):
         self.previous_widget = self.current_widget

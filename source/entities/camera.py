@@ -1,5 +1,6 @@
 # got this from github by ChristianD37
 import pygame
+import pygame.camera
 from abc import ABC, abstractmethod
 vec = pygame.math.Vector2
 

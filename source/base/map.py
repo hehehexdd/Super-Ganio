@@ -10,20 +10,20 @@ class Map:
         self.tmxdata = tm
         self.level = level
 
-    def render(self, surface, offset_x, offset_y):
+    def render(self, surface):
         ti = self.tmxdata.get_tile_image_by_gid
 
         for layer in self.tmxdata.visible_layers:
             if isinstance(layer, pytmx.TiledTileLayer):
                 for x, y, gid, in layer:
                     tile = ti(gid)
-
                     if tile:
-                        self.level.drawables[tile] = (x * self.tmxdata.tilewidth - offset_x, y * self.tmxdata.tileheight - offset_y)
+                        pos = [x * self.tmxdata.tilewidth, y * self.tmxdata.tileheight]
+                        self.level.drawables[tile] = pos
                         surface.blit(tile, (x * self.tmxdata.tilewidth,
                                             y * self.tmxdata.tileheight))
 
-    def make_map(self, offset_x, offset_y):
+    def make_map(self):
         temp_surface = pygame.Surface((self.width, self.height))
-        self.render(temp_surface, offset_x, offset_y)
+        self.render(temp_surface)
         return temp_surface

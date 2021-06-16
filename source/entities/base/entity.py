@@ -32,8 +32,8 @@ class Entity:
 	def handle_events(self, event):
 		pass
 
-	def draw(self, renderer, camera: Camera):
-		renderer.blit(self.current_image, (self.x - camera.offset.x, self.y - camera.offset.y))
+	def draw(self, renderer):
+		renderer.blit(self.current_image, (self.x, self.y))
 
 	def tick(self, delta_time):
 		pass
