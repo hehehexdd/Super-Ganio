@@ -23,8 +23,9 @@ class MapLevel(Level):
                     self.collisions.append(pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height))
                 if object_tile.name == 'player':
                     # player_animations = self.setup_player_resources()
+                    name = os.path.join(os.path.dirname(os.path.abspath("player.png")), 'assets\\images\\player\\player.png')
                     player_images = {
-                        "idle": [pygame.image.load("D:/MikeS/Uni/4th Semester/Python/Project/assets/images/player/player.png")]
+                        "idle": [pygame.image.load(name)]
                     }
                     #     "idle": player_animations[0],
                     #     "jump": player_animations[1],
