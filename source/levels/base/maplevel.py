@@ -3,7 +3,6 @@ from source.entities.player import *
 from source.base.camera import *
 import os
 import pygame
-from pathlib import Path
 
 
 class MapLevel(Level):
@@ -22,7 +21,7 @@ class MapLevel(Level):
                 if object_tile.name == 'collision':
                     self.collisions.append(pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height))
                 if object_tile.name == 'player':
-                    # player_animations = self.setup_player_resources()
+                    # player_animations = MapLevel.setup_player_resources()
                     name = os.path.join(os.path.dirname(os.path.abspath("player.png")), 'assets\\images\\player\\player.png')
                     player_images = {
                         "idle": [pygame.image.load(name)]
@@ -35,26 +34,27 @@ class MapLevel(Level):
                     self.player = Player(object_tile.x, object_tile.y, self, player_images, 20, 200)
                     print(object_tile.x, object_tile.y)
 
-    def setup_player_resources(self):
-        # get idle animations and load them
+    @staticmethod
+    def setup_player_resources():
         idle_anims = []
-        player_anim_path = "./assets/images/player"
-        idle_anim_path = player_anim_path + "/idle/"
+        dir_name = os.path.dirname(os.path.abspath("player.png"))
+        player_anim_path = os.path.join(dir_name, 'assets/images/player')
+        idle_anim_path = os.path.join(player_anim_path, "idle")
         idle_anim_files = os.listdir(idle_anim_path)
         for file in idle_anim_files:
-            idle_anims.append(pygame.image.load(idle_anim_path + file))
+            idle_anims.append(pygame.image.load(os.path.join(idle_anim_path, file)))
 
         jump_anims = []
-        jump_anim_path = player_anim_path + "/jump/"
+        jump_anim_path = os.path.join(player_anim_path, "jump")
         jump_anim_files = os.listdir(jump_anim_path)
         for file in jump_anim_files:
-            jump_anims.append(pygame.image.load(jump_anim_path + file))
+            jump_anims.append(pygame.image.load(os.path.join(jump_anim_path, file)))
 
         move_anims = []
-        move_anim_path = player_anim_path + "/move/"
+        move_anim_path = os.path.join(player_anim_path, "move")
         move_anim_files = os.listdir(move_anim_path)
         for file in move_anim_files:
-            move_anims.append(pygame.image.load(move_anim_path + file))
+            move_anims.append(pygame.image.load(os.path.join(move_anim_path, file)))
 
         return [idle_anims, jump_anims, move_anims]
 
