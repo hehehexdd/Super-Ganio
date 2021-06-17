@@ -1,6 +1,5 @@
-from source.buttons.base.button import *
-from source.widgets.base.widget import *
-from source.entities.base.entity import *
+from source.widgets.widget import *
+from source.entities.entity import *
 
 
 class Level:

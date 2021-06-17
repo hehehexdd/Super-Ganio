@@ -1,14 +1,15 @@
-from source.buttons.backbuttonwidget import BackButtonWidget
-from source.buttons.exitbutton import *
-from source.buttons.playbutton import PlayButton
-from source.buttons.startlevelbutton import StartLevelButton
-from source.levels.base.maplevel import *
-from source.levels.level1 import Level1
+from game_data.source.buttons.exitbutton import *
+from game_data.source.buttons.playbutton import *
+from game_data.source.buttons.startlevelbutton import *
+from game_data.source.levels.level1 import Level1
+from source.levels.base.level import Level
+from source.widgets.widget import Widget
 
 
 class MainMenu(Level):
     def __init__(self, instance):
         super().__init__(instance)
+
         screen_size = self.game_instance.window.get_window_size()
 
         widget = Widget((screen_size[0] / 2, 250), 50, 40, "Super Ganio!", 100)
@@ -18,6 +19,7 @@ class MainMenu(Level):
         widget.add_button(ExitButton(True, True, 'Exit', 60, owner=self))
 
         widget1.add_button(StartLevelButton(True, True, 'Level1', 60, owner=self, custom_data=[Level1(self.game_instance)]))
+        from game_data.source.buttons.backbuttonwidget import BackButtonWidget
         widget1.add_button(BackButtonWidget(True, True, 'Back', 60, owner=self, custom_data=[widget]))
 
         self.background_color = (0, 100+50, 70+50)

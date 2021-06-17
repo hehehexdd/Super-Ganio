@@ -1,6 +1,4 @@
-from source.buttons.base.button import *
-from source.levels.base.level import *
-from source.buttons.backbuttonwidget import *
+from game_data.source.buttons.backbuttonwidget import *
 
 
 class PlayButton(Button):

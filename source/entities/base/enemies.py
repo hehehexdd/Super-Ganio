@@ -1,4 +1,4 @@
-from source.entities.base.entity import *
+from source.entities.entity import *
 
 
 class Enemy(Entity):

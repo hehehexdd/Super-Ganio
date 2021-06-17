@@ -1,6 +1,5 @@
-from source.levels.mainmenulevel import *
+from game_data.source.levels.mainmenulevel import *
 import pygame
-import pytmx
 import time
 
 

@@ -1,4 +1,4 @@
-from source.base.game import *
+from source.engine.game import *
 
 if __name__ == '__main__':
     size = (1280, 720)
