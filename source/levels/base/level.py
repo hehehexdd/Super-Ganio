@@ -5,6 +5,7 @@ from source.entities.entity import *
 class Level:
     def __init__(self, instance: object):
         self.collisions = []
+        self.custom_collisions = []
         self.entities = []
         self.player = None
         self.camera = None
@@ -52,11 +53,17 @@ class Level:
     def draw(self, renderer):
         pass
 
-    def check_collides_any(self, rect: tuple):
+    def check_collides_any(self, entity: Entity, pos: list):
+        rect = entity.current_image.get_rect(topleft=(pos[0], pos[1]))
+        # TODO switch custom_collisions with collisions and remove self.collisions.
         if not self.player.ghost_mode:
             for collision in self.collisions:
                 if collision.colliderect(rect):
                     return True
+
+        for collision in self.custom_collisions:
+            if collision.check_collides(entity, pos):
+                break
 
         if self.player:
             if rect.left < 0:

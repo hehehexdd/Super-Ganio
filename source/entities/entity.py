@@ -1,4 +1,5 @@
 from source.engine.camera import *
+from source.engine.collisionchannels import *
 
 
 def clamp(value, min_val, max_val):
@@ -10,8 +11,9 @@ def clamp(value, min_val, max_val):
 
 
 class Entity:
-	def __init__(self, x, y, level_instance, images: dict, speed_x):
+	def __init__(self, hp, collision_channel: CollisionChannel, x, y, level_instance, images: dict, speed_x):
 		self.level_instance = level_instance
+		self.hp = hp
 		self.x = x
 		self.y = y
 		self.images = images
@@ -23,6 +25,7 @@ class Entity:
 		self.fly_mode = False
 		self.ghost_mode = False
 		self.is_on_ground = False
+		self.collision_channel = collision_channel
 		# jump vals v
 		self.can_jump = True
 		self.can_calc_jump_point = True
@@ -38,13 +41,17 @@ class Entity:
 
 	def move_x_axis(self, value):
 		new_pos = self.x + value
-		if not self.level_instance.check_collides_any(self.current_image.get_rect(topleft=(new_pos, self.y))):
-			self.x = new_pos
+
+		if not self.move_x == 0:
+			if not self.level_instance.check_collides_any(self, (new_pos, self.y)):
+				self.x = new_pos
 
 	def move_y_axis(self, value):
 		new_pos = self.y + value
-		entity_rect = self.current_image.get_rect(topleft=(self.x, new_pos))
-		condition = self.level_instance.check_collides_any(entity_rect)
+		condition = True
+
+		if not self.move_y == 0:
+			condition = self.level_instance.check_collides_any(self, (self.x, new_pos))
 
 		if not self.fly_mode:
 			# if jumping
@@ -89,6 +96,7 @@ class Entity:
 
 	def apply_physics(self, delta_time):
 		if self.enable_gravity:
+			self.move_y = 1
 			self.move_y_axis(self.current_gravity_pull * delta_time)
 			self.current_gravity_pull += self.gravity_increment * delta_time
 			self.current_gravity_pull = clamp(self.current_gravity_pull, self.initial_gravity, self.max_gravity)
@@ -98,3 +106,9 @@ class Entity:
 		if isinstance(camera, Camera):
 			rect = camera.apply_rect(rect)
 		renderer.blit(self.current_image, rect)
+
+	def is_dead(self):
+		return self.hp <= 0
+
+	def kill(self):
+		pass

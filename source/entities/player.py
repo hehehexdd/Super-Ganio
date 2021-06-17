@@ -2,11 +2,8 @@ from source.levels.base.level import *
 
 
 class Player(Entity):
-    LIVES = 3
-    COLLECTED_ROSES = 0
-
-    def __init__(self, x, y, level_instance, images: dict, speed):
-        super().__init__(x, y, level_instance, images, speed)
+    def __init__(self, hp, collision_channel: CollisionChannel, x, y, level_instance, images: dict, speed):
+        super().__init__(hp, collision_channel, x, y, level_instance, images, speed)
         self.start_ticking = True
         self.start_moving = False
         self.start_moving_down = False
@@ -67,3 +64,7 @@ class Player(Entity):
         if isinstance(camera, Camera):
             rect = camera.apply_rect(rect)
         renderer.blit(self.current_image, rect)
+
+    def kill(self):
+        # make level that says you died for 3 seconds and then restart from inside
+        self.level_instance.game_instance.restart()

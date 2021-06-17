@@ -54,6 +54,10 @@ class Game:
 
         self.window.flip()
 
+    def restart(self):
+        self.last_level = None
+        self.current_level = MainMenu(self)
+
     def move_to_level(self, level):
         self.last_level = self.current_level
         self.current_level = level
