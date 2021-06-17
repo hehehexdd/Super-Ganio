@@ -14,7 +14,7 @@ class Entity:
 		self.enable_gravity = True
 		self.start_ticking = True
 
-	def move(self, value):
+	def move_x_axis(self, value):
 		pass
 
 	def jump(self, value):

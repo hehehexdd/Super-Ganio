@@ -14,13 +14,15 @@ class Player(Entity):
         self.move_x = 0
         self.move_y = 0
 
-    def move(self, value):
-        new_pos = value
-        self.x += new_pos
+    def move_x_axis(self, value):
+        new_pos = self.x + value
+        if not self.level_instance.check_collides_any(self.current_image.get_rect(topleft=(new_pos, self.y))):
+            self.x = new_pos
 
-    def move_down(self, value):
-        new_pos = value
-        self.y += new_pos
+    def move_y_axis(self, value):
+        new_pos = self.y + value
+        if not self.level_instance.check_collides_any(self.current_image.get_rect(topleft=(self.x, new_pos))):
+            self.y = new_pos
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
@@ -45,8 +47,8 @@ class Player(Entity):
 
     def tick(self, delta_time):
         self.handle_input()
-        self.move(self.speed * self.move_x * delta_time)
-        self.move_down(self.speed * self.move_y * delta_time)
+        self.move_x_axis(self.speed * self.move_x * delta_time)
+        self.move_y_axis(self.speed * self.move_y * delta_time)
 
     def draw(self, renderer: pygame.Surface, camera: Camera):
         rect = self.current_image.get_rect(topleft=(self.x, self.y))

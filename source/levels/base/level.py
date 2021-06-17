@@ -50,8 +50,17 @@ class Level:
         pass
 
     def check_collides_any(self, rect: tuple):
-        for surface in self.surfaces:
-            if surface.get_rect(topleft=self.surfaces[surface]).colliderect(rect):
+        for collision in self.collisions:
+            if collision.colliderect(rect):
+                return True
+        if self.player:
+            if rect.left < 0:
+                return True
+            elif rect.top < 0:
+                return True
+            elif rect.right > self.map.width:
+                return True
+            elif rect.bottom > self.map.height:
                 return True
         return False
 
