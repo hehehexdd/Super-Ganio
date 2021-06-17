@@ -41,6 +41,7 @@ class Game:
 
     def tick(self, delta_time):
         if self.current_level:
+            self.current_level.hidden_tick(delta_time)
             self.current_level.tick(delta_time)
 
     def draw(self, renderer):

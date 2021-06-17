@@ -31,8 +31,7 @@ class MapLevel(Level):
                     #     "move": player_animations[2]
                     # }
                     self.camera = Camera(self.map.width, self.map.height, self.game_instance.window)
-                    self.player = Player(object_tile.x, object_tile.y, self, player_images, 20, 200)
-                    print(object_tile.x, object_tile.y)
+                    self.player = Player(object_tile.x, object_tile.y, self, player_images, 300)
 
     @staticmethod
     def setup_player_resources():
@@ -57,13 +56,6 @@ class MapLevel(Level):
             move_anims.append(pygame.image.load(os.path.join(move_anim_path, file)))
 
         return [idle_anims, jump_anims, move_anims]
-
-    def post_handle_events(self, event: pygame.event.Event):
-        if self.player:
-            self.player.handle_events(event)
-
-    def hidden_tick(self, delta_time):
-        pass
 
     def draw(self, renderer):
         if self.camera:

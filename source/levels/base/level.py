@@ -22,23 +22,27 @@ class Level:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.current_widget is not None:
                 self.current_widget.handle_event(ButtonEvent.Click, mouse_pos)
-
+        if self.player:
+            self.player.handle_events(event)
         self.post_handle_events(event)
 
     def post_handle_events(self, event: pygame.event.Event):
         pass
 
     def hidden_tick(self, delta_time):
-        pass
-
-    def tick(self, delta_time):
         for entity in self.entities:
             if entity.start_ticking:
+                entity.hidden_tick(delta_time)
                 entity.tick(delta_time)
+                entity.apply_physics(delta_time)
         if self.player:
             if self.player.start_ticking:
+                self.player.hidden_tick(delta_time)
                 self.player.tick(delta_time)
-        self.hidden_tick(delta_time)
+                self.player.apply_physics(delta_time)
+
+    def tick(self, delta_time):
+        pass
 
     def post_draw(self, renderer):
         self.draw(renderer)
