@@ -21,6 +21,7 @@ class Entity:
 		self.move_x = 0
 		self.move_y = 0
 		self.debug_mode = False
+		self.is_on_ground = False
 		# jump vals v
 		self.can_jump = True
 		self.can_calc_jump_point = True
@@ -31,7 +32,7 @@ class Entity:
 		self.enable_gravity = True
 		self.initial_gravity = 1
 		self.current_gravity_pull = 1
-		self.gravity_increment = 15000
+		self.gravity_increment = 10000
 		self.max_gravity = 800
 
 	def move_x_axis(self, value):
@@ -53,6 +54,7 @@ class Entity:
 					self.y = new_pos
 					self.is_on_ground = False
 				else:
+					self.is_on_ground = False
 					self.can_jump = False
 					self.enable_gravity = True
 					self.move_y = 0
@@ -61,7 +63,7 @@ class Entity:
 			elif not condition:
 				self.y = new_pos
 			else:
-				self.can_jump = True
+				self.is_on_ground = True
 				self.can_calc_jump_point = True
 		else:
 			self.y = new_pos

@@ -11,12 +11,14 @@ class Player(Entity):
         self.start_moving = False
         self.start_moving_down = False
         self.current_image = pygame.transform.scale2x(self.current_image)
+        self.jump_key_released = True
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
                 self.enable_gravity = True
                 self.can_jump = False
+                self.jump_key_released = True
             if event.key == pygame.K_ESCAPE:
                 self.debug_mode = not self.debug_mode
                 self.enable_gravity = not self.enable_gravity
@@ -25,7 +27,6 @@ class Player(Entity):
         self.move_x = 0
         self.move_y = 0
         keys = pygame.key.get_pressed()
-        keys_hold = pygame.key.get_repeat()
 
         if keys[pygame.K_a]:
             self.move_x = -1
@@ -37,10 +38,16 @@ class Player(Entity):
             elif keys[pygame.K_s]:
                 self.move_y = 1
         if keys[pygame.K_SPACE]:
+            self.jump_key_released = False
             self.calc_jump_point()
             self.jump()
 
+    def check_can_jump_again(self):
+        if self.is_on_ground and self.jump_key_released:
+            self.can_jump = True
+
     def hidden_tick(self, delta_time):
+        self.check_can_jump_again()
         self.handle_input()
         self.move_x_axis(self.speed_x * self.move_x * delta_time)
         self.move_y_axis(self.jump_speed * self.move_y * delta_time)
