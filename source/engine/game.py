@@ -14,6 +14,7 @@ class Game:
         self.last_level = None
         self.current_level = None
         self.delta_time = 0.0
+        self.timer_functions = {}
 
     def start(self):
         self.running = True
@@ -31,6 +32,11 @@ class Game:
 
         pygame.quit()
 
+    def set_timer(self, function, time_in_seconds):
+        start_time = time.time()
+        end_time = time_in_seconds + start_time
+        self.timer_functions[function] = end_time
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -39,6 +45,14 @@ class Game:
                 self.current_level.handle_events(event)
 
     def tick(self, delta_time):
+        functions_to_remove = []
+        for function in self.timer_functions:
+            if time.time() >= self.timer_functions[function]:
+                function()
+                functions_to_remove.append(function)
+        for function in functions_to_remove:
+            self.timer_functions.pop(function, None)
+        functions_to_remove.clear()
         if self.current_level:
             self.current_level.hidden_tick(delta_time)
             self.current_level.tick(delta_time)

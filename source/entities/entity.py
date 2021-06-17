@@ -40,39 +40,41 @@ class Entity:
 		self.max_gravity = 800
 
 	def move_x_axis(self, value):
-		new_pos = self.x + value
+		if not self.is_dead():
+			new_pos = self.x + value
 
-		if not self.move_x == 0:
-			if not self.level_instance.check_collides_any(self, (new_pos, self.y)):
-				self.x = new_pos
+			if not self.move_x == 0:
+				if not self.level_instance.check_collides_any(self, (new_pos, self.y)):
+					self.x = new_pos
 
 	def move_y_axis(self, value):
-		new_pos = self.y + value
-		condition = True
+		if not self.is_dead():
+			new_pos = self.y + value
+			condition = True
 
-		if not self.move_y == 0:
-			condition = self.level_instance.check_collides_any(self, (self.x, new_pos))
+			if not self.move_y == 0:
+				condition = self.level_instance.check_collides_any(self, (self.x, new_pos))
 
-		if not self.fly_mode:
-			# if jumping
-			if value < 0:
-				if not condition and new_pos > self.max_jump_pos_y:
+			if not self.fly_mode:
+				# if jumping
+				if value < 0:
+					if not condition and new_pos > self.max_jump_pos_y:
+						self.y = new_pos
+						self.is_on_ground = False
+					else:
+						self.is_on_ground = False
+						self.can_jump = False
+						self.enable_gravity = True
+						self.move_y = 0
+						self.current_gravity_pull = self.initial_gravity
+				# if not jumping
+				elif not condition:
 					self.y = new_pos
-					self.is_on_ground = False
 				else:
-					self.is_on_ground = False
-					self.can_jump = False
-					self.enable_gravity = True
-					self.move_y = 0
-					self.current_gravity_pull = self.initial_gravity
-			# if not jumping
+					self.is_on_ground = True
+					self.can_calc_jump_point = True
 			elif not condition:
 				self.y = new_pos
-			else:
-				self.is_on_ground = True
-				self.can_calc_jump_point = True
-		elif not condition:
-			self.y = new_pos
 
 	def jump(self):
 		if self.can_jump:
@@ -111,4 +113,4 @@ class Entity:
 		return self.hp <= 0
 
 	def kill(self):
-		pass
+		self.hp = 0

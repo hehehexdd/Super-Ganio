@@ -7,5 +7,4 @@ class DeathBox(Box):
 
     def on_collide(self, entity: Entity, new_pos: list):
         if not entity.is_dead():
-
             entity.kill()

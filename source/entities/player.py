@@ -66,5 +66,8 @@ class Player(Entity):
         renderer.blit(self.current_image, rect)
 
     def kill(self):
-        # make level that says you died for 3 seconds and then restart from inside
-        self.level_instance.game_instance.restart()
+        super(Player, self).kill()
+        pos = self.level_instance.game_instance.window.get_window_size()
+        widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You died.", text_size=50)
+        self.level_instance.set_widget(widget)
+        self.level_instance.game_instance.set_timer(self.level_instance.game_instance.restart, 3)
