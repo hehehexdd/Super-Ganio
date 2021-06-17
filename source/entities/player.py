@@ -16,12 +16,16 @@ class Player(Entity):
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_SPACE:
-                self.enable_gravity = True
-                self.can_jump = False
+                if not self.fly_mode:
+                    self.enable_gravity = True
+                    self.can_jump = False
                 self.jump_key_released = True
-            if event.key == pygame.K_ESCAPE:
-                self.debug_mode = not self.debug_mode
+            if event.key == pygame.K_f:
+                self.fly_mode = not self.fly_mode
                 self.enable_gravity = not self.enable_gravity
+            if event.key == pygame.K_g:
+                if self.fly_mode:
+                    self.ghost_mode = not self.ghost_mode
 
     def handle_input(self):
         self.move_x = 0
@@ -32,15 +36,18 @@ class Player(Entity):
             self.move_x = -1
         elif keys[pygame.K_d]:
             self.move_x = 1
-        if self.debug_mode:
+        if self.fly_mode:
             if keys[pygame.K_w]:
                 self.move_y = -1
             elif keys[pygame.K_s]:
                 self.move_y = 1
         if keys[pygame.K_SPACE]:
-            self.jump_key_released = False
-            self.calc_jump_point()
-            self.jump()
+            if not self.fly_mode:
+                self.jump_key_released = False
+                self.calc_jump_point()
+                self.jump()
+            else:
+                self.move_y = -1
 
     def check_can_jump_again(self):
         if self.is_on_ground and self.jump_key_released:

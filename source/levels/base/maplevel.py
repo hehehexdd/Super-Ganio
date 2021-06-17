@@ -14,7 +14,6 @@ class MapLevel(Level):
     def setup_assets(self, filename):
         self.map = Map(filename)
         self.surface = self.map.make_map()
-
         if self.map:
             self.collisions = []
             for object_tile in self.map.tmxdata.objects:

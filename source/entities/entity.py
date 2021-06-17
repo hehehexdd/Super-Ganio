@@ -20,7 +20,8 @@ class Entity:
 		self.start_ticking = True
 		self.move_x = 0
 		self.move_y = 0
-		self.debug_mode = False
+		self.fly_mode = False
+		self.ghost_mode = False
 		self.is_on_ground = False
 		# jump vals v
 		self.can_jump = True
@@ -43,11 +44,9 @@ class Entity:
 	def move_y_axis(self, value):
 		new_pos = self.y + value
 		entity_rect = self.current_image.get_rect(topleft=(self.x, new_pos))
+		condition = self.level_instance.check_collides_any(entity_rect)
 
-		if not self.debug_mode:
-			condition = self.level_instance.check_collides_any(entity_rect)
-
-		if not self.debug_mode:
+		if not self.fly_mode:
 			# if jumping
 			if value < 0:
 				if not condition and new_pos > self.max_jump_pos_y:
@@ -65,7 +64,7 @@ class Entity:
 			else:
 				self.is_on_ground = True
 				self.can_calc_jump_point = True
-		else:
+		elif not condition:
 			self.y = new_pos
 
 	def jump(self):

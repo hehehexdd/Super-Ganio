@@ -53,9 +53,11 @@ class Level:
         pass
 
     def check_collides_any(self, rect: tuple):
-        for collision in self.collisions:
-            if collision.colliderect(rect):
-                return True
+        if not self.player.ghost_mode:
+            for collision in self.collisions:
+                if collision.colliderect(rect):
+                    return True
+
         if self.player:
             if rect.left < 0:
                 return True
