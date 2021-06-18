@@ -1,7 +1,3 @@
-import os
-import pygame
-
-from game_data.engine.base.collisioninfo import *
 from game_data.source.entities.objectives import *
 from game_data.source.levels.base.customlevel import *
 from game_data.source.entities.ganio_player import *
@@ -62,7 +58,7 @@ class BaseLevel(CustomLevel):
             for file in move_anim_files:
                 move_anims.append(pygame.image.load(os.path.join(move_anim_path, file)))
 
-        return {'idle': idle_anims, 'jump' : jump_anims, 'move': move_anims}
+        return {'idle': idle_anims, 'jump': jump_anims, 'move': move_anims}
 
     def check_win_condition(self):
         if self.player.get_num_of_items_of_name('rose') >= self.roses_to_collect:

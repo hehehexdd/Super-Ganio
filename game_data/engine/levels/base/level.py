@@ -1,6 +1,7 @@
 from game_data.engine.widgets.widget import *
 from game_data.engine.entities.base.entity import *
-
+import pygame
+import os
 
 class Level:
     def __init__(self, instance: object):
@@ -42,14 +43,14 @@ class Level:
                     self.player.tick(delta_time)
                     self.player.apply_physics(delta_time)
 
+    def draw(self, renderer):
+        pass
+
     def post_draw(self, renderer):
         self.draw(renderer)
 
         if self.current_widget is not None:
             self.current_widget.draw(self.game_instance.renderer)
-
-    def draw(self, renderer):
-        pass
 
     def check_collides_any(self, entity: Entity, pos: list):
         rect = entity.current_image.get_rect(topleft=(pos[0], pos[1]))

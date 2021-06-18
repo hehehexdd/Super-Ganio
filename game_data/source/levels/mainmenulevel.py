@@ -1,14 +1,21 @@
 from game_data.source.buttons.exitbutton import *
 from game_data.source.buttons.playbutton import *
 from game_data.source.buttons.startlevelbutton import *
-from game_data.source.levels.BaseLevel import BaseLevel
-from game_data.engine.levels.base.level import Level
-from game_data.engine.widgets.widget import Widget
+from game_data.source.levels.BaseLevel import *
+from game_data.engine.levels.base.level import *
+from game_data.engine.widgets.widget import *
+import os
 
 
 class MainMenu(Level):
     def __init__(self, instance):
         super().__init__(instance)
+
+        abs_path = os.path.dirname(os.path.abspath("assets"))
+        abs_path = os.path.join(abs_path, 'game_data\\assets\\music\\Terraria Music - Day.mp3')
+        self.game_instance.music.load(abs_path)
+        self.game_instance.music.play(-1)
+        self.game_instance.music.set_volume(0.2)
 
         screen_size = self.game_instance.window.get_window_size()
 
