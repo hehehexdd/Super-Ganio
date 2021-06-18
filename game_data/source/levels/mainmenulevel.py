@@ -1,7 +1,7 @@
 from game_data.source.buttons.exitbutton import *
 from game_data.source.buttons.playbutton import *
 from game_data.source.buttons.startlevelbutton import *
-from game_data.source.levels.base.customlevel import CustomLevel
+from game_data.source.levels.BaseLevel import BaseLevel
 from source.levels.base.level import Level
 from source.widgets.widget import Widget
 
@@ -18,7 +18,8 @@ class MainMenu(Level):
         widget.add_button(PlayButton(True, True, 'Play', 60, owner=self, custom_data=[widget1]))
         widget.add_button(ExitButton(True, True, 'Exit', 60, owner=self))
 
-        widget1.add_button(StartLevelButton(True, True, 'Level1', 60, owner=self, custom_data=[CustomLevel(self.game_instance, "./game_data/assets/levels/level1/level.tmx")]))
+        widget1.add_button(StartLevelButton(True, True, 'Level1', 60, owner=self, custom_data=[BaseLevel(self.game_instance, "./game_data/assets/levels/level1/level.tmx")]))
+        widget1.add_button(StartLevelButton(True, True, 'Level2', 60, owner=self, custom_data=[BaseLevel(self.game_instance, "./game_data/assets/levels/level2/level.tmx")]))
         from game_data.source.buttons.backbuttonwidget import BackButtonWidget
         widget1.add_button(BackButtonWidget(True, True, 'Back', 60, owner=self, custom_data=[widget]))
 

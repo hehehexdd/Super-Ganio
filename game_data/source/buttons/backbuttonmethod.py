@@ -1,7 +1,7 @@
 from source.buttons.base.button import *
 
 
-class BackButton(Button):
+class BackButtonMethod(Button):
     def __init__(self,
                  should_create_text: bool = True,
                  should_create_background: bool = False,
@@ -20,4 +20,4 @@ class BackButton(Button):
                          position, background_color, background_hover_color, background_size, owner, custom_data)
 
     def on_click(self):
-        self.owner.game_instance.move_to_level(self.custom_data[0])
+        self.custom_data[0]()

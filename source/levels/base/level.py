@@ -10,7 +10,7 @@ class Level:
         self.player = None
         self.camera = None
         self.current_widget = None
-        self.previous_widget = None
+        self.last_widget = None
         self.game_instance = instance
         self.background_color = (0, 0, 0, 255)
 
@@ -29,20 +29,18 @@ class Level:
     def post_handle_events(self, event: pygame.event.Event):
         pass
 
-    def hidden_tick(self, delta_time):
-        for entity in self.entities:
-            if entity.start_ticking:
-                entity.hidden_tick(delta_time)
-                entity.tick(delta_time)
-                entity.apply_physics(delta_time)
-        if self.player:
-            if self.player.start_ticking:
-                self.player.hidden_tick(delta_time)
-                self.player.tick(delta_time)
-                self.player.apply_physics(delta_time)
-
     def tick(self, delta_time):
-        pass
+        if not self.game_instance.paused:
+            for entity in self.entities:
+                if entity.start_ticking:
+                    entity.hidden_tick(delta_time)
+                    entity.tick(delta_time)
+                    entity.apply_physics(delta_time)
+            if self.player:
+                if self.player.start_ticking:
+                    self.player.hidden_tick(delta_time)
+                    self.player.tick(delta_time)
+                    self.player.apply_physics(delta_time)
 
     def post_draw(self, renderer):
         self.draw(renderer)
@@ -73,7 +71,7 @@ class Level:
         return False
 
     def set_widget(self, widget: Widget):
-        self.previous_widget = self.current_widget
+        self.last_widget = self.current_widget
         self.current_widget = widget
 
     def remove_widget(self):

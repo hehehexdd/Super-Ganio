@@ -5,9 +5,6 @@ from source.levels.base.level import *
 class Player(Entity):
     def __init__(self, hp, x, y, level_instance, images: dict):
         super().__init__(hp, x, y, level_instance, images, 300)
-        self.start_ticking = True
-        self.start_moving = False
-        self.start_moving_down = False
         self.current_image = pygame.transform.scale2x(self.current_image)
         self.jump_key_released = True
         self.collision = Box(self, self.current_image.get_rect(), CollisionChannel.Player)
@@ -19,12 +16,14 @@ class Player(Entity):
                     self.enable_gravity = True
                     self.can_jump = False
                 self.jump_key_released = True
-            if event.key == pygame.K_f:
-                self.fly_mode = not self.fly_mode
-                self.enable_gravity = not self.enable_gravity
-            if event.key == pygame.K_g:
-                if self.fly_mode:
-                    self.ghost_mode = not self.ghost_mode
+            # dev mode
+            if not self.level_instance.game_instance.paused:
+                if event.key == pygame.K_f:
+                    self.fly_mode = not self.fly_mode
+                    self.enable_gravity = not self.enable_gravity
+                if event.key == pygame.K_g:
+                    if self.fly_mode:
+                        self.ghost_mode = not self.ghost_mode
 
     def handle_input(self):
         self.move_x = 0
@@ -55,8 +54,7 @@ class Player(Entity):
     def hidden_tick(self, delta_time):
         self.check_can_jump_again()
         self.handle_input()
-        self.move_x_axis(self.speed_x * self.move_x * delta_time)
-        self.move_y_axis(self.jump_speed * self.move_y * delta_time)
+        super(Player, self).hidden_tick(delta_time)
 
     def tick(self, delta_time):
         pass
@@ -70,6 +68,6 @@ class Player(Entity):
     def kill(self):
         super(Player, self).kill()
         pos = self.level_instance.game_instance.window.get_window_size()
-        widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You died.", text_size=50)
+        widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You died.", text_size=50, text_color=(255, 0, 0))
         self.level_instance.set_widget(widget)
-        self.level_instance.game_instance.set_timer(self.level_instance.game_instance.restart, 3)
+        self.level_instance.game_instance.set_timer(self.level_instance.game_instance.restart, 1)

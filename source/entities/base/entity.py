@@ -71,6 +71,9 @@ class Entity:
 				elif not condition:
 					self.y = new_pos
 					self.collision.move(self.current_image.get_rect(topleft=(self.x, self.y)))
+					self.can_calc_jump_point = False
+					self.can_jump = False
+					self.is_on_ground = False
 				else:
 					self.is_on_ground = True
 					self.can_calc_jump_point = True
@@ -90,6 +93,7 @@ class Entity:
 
 	def add_item_to_inventory(self, item):
 		self.items.append(item)
+		self.on_item_add_to_inventory()
 
 	def on_item_add_to_inventory(self):
 		pass
@@ -119,10 +123,14 @@ class Entity:
 			self.current_gravity_pull = clamp(self.current_gravity_pull, self.initial_gravity, self.max_gravity)
 
 	def draw(self, renderer, camera):
-		rect = self.current_image.get_rect()
+		rect = self.current_image.get_rect(topleft=(self.x, self.y))
 		if isinstance(camera, Camera):
 			rect = camera.apply_rect(rect)
 		renderer.blit(self.current_image, rect)
+
+	def stop_movement(self):
+		self.move_x = 0
+		self.enable_gravity = False
 
 	def is_dead(self):
 		return self.hp <= 0
