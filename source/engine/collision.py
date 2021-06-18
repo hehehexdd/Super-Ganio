@@ -14,23 +14,32 @@ class Box:
     def pre_collide(self, entity: Entity, new_pos: list):
         self.collision_channels: list
         if not self.entity == entity:
-            for i in range(len(self.collision_channels)):
-                for j in range(len(entity.collision.collision_channels)):
-                    if self.collision_channels[i] == entity.collision.collision_channels[j]:
-                        return self.check_collides(entity, new_pos, entity.collision.collision_channels[j])
-                    elif self.collision_channels[i] <= CollisionChannel.World:
-                        return self.check_collides(entity, new_pos, entity.collision.collision_channels[j])
+            for collision in self.collision_channels:
+                for entity_collision in entity.collision.collision_channels:
+                    if collision == entity_collision:
+                        should_skip = False
+                        result = self.check_collides(entity, new_pos, entity_collision, should_skip)
+                        if not should_skip:
+                            return result
+                    elif entity_collision <= CollisionChannel.World:
+                        should_skip = False
+                        result = self.check_collides(entity, new_pos, entity_collision, should_skip)
+                        if not should_skip:
+                            return result
 
-    def check_collides(self, entity: Entity, new_pos: list, channel):
+    def check_collides(self, entity: Entity, new_pos: list, channel, should_skip):
         if self.rect.colliderect(entity.current_image.get_rect(topleft=new_pos)):
-            return self.on_collide(entity, new_pos, channel)
+            self.on_collide(entity, new_pos, channel, should_skip)
+            if not should_skip:
+                return True
+            return False
         else:
-            return self.on_no_collision(entity, new_pos)
+            self.on_no_collision(entity, new_pos, should_skip)
+            return False
 
-    def on_collide(self, entity: Entity, new_pos: list, channel):
+    def on_collide(self, entity: Entity, new_pos: list, channel, should_skip):
         if channel <= CollisionChannel.World:
-            return True
-        return False
+            should_skip = False
 
-    def on_no_collision(self, entity: Entity, new_pos: list):
-        return False
+    def on_no_collision(self, entity: Entity, new_pos: list, should_skip):
+        should_skip = False

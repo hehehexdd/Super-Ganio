@@ -7,24 +7,21 @@ class DeathBox(Box):
     def __init__(self, rect: pygame.rect.Rect):
         super().__init__(None, rect, list([CollisionChannel.Entity]))
 
-    def on_collide(self, entity: Entity, new_pos: list, channel):
+    def on_collide(self, entity: Entity, new_pos: list, channel, should_skip):
         if not entity.is_dead():
             entity.kill()
-        return False
 
 
 class ObjectiveBox(Box):
     def __init__(self, entity, rect: pygame.rect.Rect):
         super().__init__(entity, rect, list([CollisionChannel.Player]))
 
-    def on_collide(self, entity: Entity, new_pos: list, channel):
+    def on_collide(self, entity: Entity, new_pos: list, channel, should_skip):
         if channel == CollisionChannel.Player:
             if isinstance(entity, Player):
                 self.entity.level_instance.collisions.remove(self)
                 entity.add_item_to_inventory(self.entity.items[0])
                 self.entity.level_instance.entities.remove(self.entity)
-            return False
-        return False
 
 
 # class EnemyCollision(Box):
