@@ -1,4 +1,5 @@
 from source.engine.collision import *
+from source.entities.player import Player
 
 
 class DeathBox(Box):
@@ -19,7 +20,8 @@ class ObjectiveBox(Box):
         return False
 
     def on_collide(self, entity: Entity, new_pos: list):
-        entity.add_item_to_inventory(self.entity.items[0])
-        self.entity.level_instance.collisions.remove(self)
-        self.entity.level_instance.entities.remove(self.entity)
+        if isinstance(entity, Player):
+            self.entity.level_instance.collisions.remove(self)
+            entity.add_item_to_inventory(self.entity.items[0])
+            self.entity.level_instance.entities.remove(self.entity)
 

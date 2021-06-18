@@ -32,7 +32,7 @@ class BaseLevel(CustomLevel):
         images_path = os.path.join(assets_path, 'images')
         anim_path = os.path.join(dir_name, os.path.join(images_path, entity_name))
         idle_anim_path = os.path.join(anim_path, "idle")
-        
+
         if os.path.exists(idle_anim_path):
             idle_anim_files = os.listdir(idle_anim_path)
             for file in idle_anim_files:
