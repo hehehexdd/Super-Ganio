@@ -33,12 +33,12 @@ class Level:
         if not self.game_instance.paused:
             for entity in self.entities:
                 if entity.start_ticking:
-                    entity.hidden_tick(delta_time)
+                    entity.animate()
                     entity.tick(delta_time)
                     entity.apply_physics(delta_time)
             if self.player:
                 if self.player.start_ticking:
-                    self.player.hidden_tick(delta_time)
+                    self.player.animate()
                     self.player.tick(delta_time)
                     self.player.apply_physics(delta_time)
 
@@ -54,10 +54,8 @@ class Level:
     def check_collides_any(self, entity: Entity, pos: list):
         rect = entity.current_image.get_rect(topleft=(pos[0], pos[1]))
         for collision in self.collisions:
-            condition = collision.pre_collide(entity, pos)
-            if not self.player.ghost_mode:
-                if condition:
-                    return True
+            if collision.pre_collide(entity, pos):
+                return True
 
         if self.player:
             if rect.left < 0:

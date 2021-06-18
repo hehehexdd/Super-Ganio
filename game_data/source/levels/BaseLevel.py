@@ -18,11 +18,15 @@ class BaseLevel(CustomLevel):
         for object_tile in self.map.tmxdata.objects:
             if object_tile.type == 'collision':
                 if object_tile.name == "rose":
-                    self.entities.append(Rose(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rose'), 0))
+                    self.entities.append(Rose(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rose')))
                     self.roses_to_collect += 1
             elif object_tile.type == 'enemy':
                 if object_tile.name == 'englishman':
-                    self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('player'), 200, -1))
+                    self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('englishman'), 80, -1))
+                elif object_tile.name == 'rat':
+                    self.entities.append(Enemy(2, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rat'), 300, -1))
+                elif object_tile.name == 'chicken':
+                    self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('chicken'), 150, -1))
 
     @staticmethod
     def setup_resources(entity_name):

@@ -11,7 +11,7 @@ def clamp(value, min_val, max_val):
 
 
 class Entity:
-	def __init__(self, hp, x, y, level_instance, images: dict, speed_x):
+	def __init__(self, hp, x, y, level_instance, images: dict, default_set, speed_x):
 		self.items = []
 		self.level_instance = level_instance
 		self.collision = None
@@ -19,8 +19,11 @@ class Entity:
 		self.x = x
 		self.y = y
 		self.images = images
-		self.current_image = self.images['idle'][0]
+		self.current_image_set = default_set
+		self.current_image_set_index = 0
+		self.current_image = self.current_image_set[self.current_image_set_index]
 		self.speed_x = speed_x
+		self.can_update_animation = True
 		self.start_ticking = True
 		self.move_x = 0
 		self.move_y = 0
@@ -32,15 +35,21 @@ class Entity:
 		# jump vals v
 		self.can_jump = True
 		self.can_calc_jump_point = True
-		self.jump_speed = 800
+		self.jump_speed = 700
 		self.max_jump_pos_y = 0
 		self.max_jump_height = 200
 		# gravity vals v
 		self.enable_gravity = True
 		self.initial_gravity = 1
 		self.current_gravity_pull = 1
-		self.gravity_increment = 10000
+		self.gravity_increment = 5000
 		self.max_gravity = 800
+
+	def scale_all_images_by(self, scale):
+		for image_set in self.images:
+			for i in range(len(self.images[image_set])):
+				image = self.images[image_set][i]
+				self.images[image_set][i] = pygame.transform.scale(image, (image.get_rect().width * scale, image.get_rect().height * scale))
 
 	def move_x_axis(self, value):
 		if not self.is_dead():
@@ -96,8 +105,8 @@ class Entity:
 	def flip_all_images(self, facing_right_now: bool):
 		if facing_right_now != self.facing_right:
 			for image_list_name in self.images:
-				for image in self.images[image_list_name]:
-					image = pygame.transform.flip(image, True, False)
+				for i in range(len(self.images[image_list_name])):
+					self.images[image_list_name][i] = pygame.transform.flip(self.images[image_list_name][i], True, False)
 			self.current_image = pygame.transform.flip(self.current_image, True, False)
 			self.facing_right = not self.facing_right
 
@@ -118,12 +127,9 @@ class Entity:
 	def handle_events(self, event):
 		pass
 
-	def hidden_tick(self, delta_time):
+	def tick(self, delta_time):
 		self.move_x_axis(self.speed_x * self.move_x * delta_time)
 		self.move_y_axis(self.jump_speed * self.move_y * delta_time)
-
-	def tick(self, delta_time):
-		pass
 
 	def apply_physics(self, delta_time):
 		if self.enable_gravity:
@@ -131,6 +137,26 @@ class Entity:
 			self.move_y_axis(self.current_gravity_pull * delta_time)
 			self.current_gravity_pull += self.gravity_increment * delta_time
 			self.current_gravity_pull = clamp(self.current_gravity_pull, self.initial_gravity, self.max_gravity)
+
+	def switch_current_image_set(self, image_set_name: str):
+		if image_set_name in self.images.keys():
+			self.current_image_set = self.images[image_set_name]
+
+	def animate(self):
+		if self.can_update_animation:
+			self.apply_animation()
+			self.level_instance.game_instance.set_timer(self.reset_animation, 0.125)
+
+	def apply_animation(self):
+		if self.current_image_set_index < len(self.current_image_set):
+			self.current_image = self.current_image_set[self.current_image_set_index]
+			self.current_image_set_index += 1
+		else:
+			self.current_image_set_index = 0
+		self.can_update_animation = False
+
+	def reset_animation(self):
+		self.can_update_animation = True
 
 	def draw(self, renderer, camera):
 		rect = self.current_image.get_rect(topleft=(self.x, self.y))

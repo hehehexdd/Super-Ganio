@@ -28,7 +28,7 @@ class MapLevel(Level):
                         self.player.x = object_tile.x
                         self.player.y = object_tile.y
                     elif not object_tile.name:
-                        self.collisions.append(Box(None, pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), CollisionChannel.Entity))
+                        self.collisions.append(Box(None, pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), [CollisionChannel.World]))
 
     def draw(self, renderer):
         if self.camera:

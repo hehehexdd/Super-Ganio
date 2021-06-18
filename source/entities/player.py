@@ -4,10 +4,10 @@ from source.levels.base.level import *
 
 class Player(Entity):
     def __init__(self, hp, x, y, level_instance, images: dict):
-        super().__init__(hp, x, y, level_instance, images, 300)
-        self.current_image = pygame.transform.scale2x(self.current_image)
+        super().__init__(hp, x, y, level_instance, images, images['idle'], 300)
+        self.scale_all_images_by(2)
         self.jump_key_released = True
-        self.collision = Box(self, self.current_image.get_rect(), CollisionChannel.Player)
+        self.collision = Box(self, self.current_image.get_rect(), list([CollisionChannel.Player]))
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
@@ -30,13 +30,16 @@ class Player(Entity):
     def handle_input(self):
         self.move_x = 0
         self.move_y = 0
+        self.switch_current_image_set('idle')
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
             self.move_x = -1
+            self.switch_current_image_set('move')
             self.flip_all_images(False)
         elif keys[pygame.K_d]:
             self.move_x = 1
+            self.switch_current_image_set('move')
             self.flip_all_images(True)
         if self.fly_mode:
             if keys[pygame.K_w]:
@@ -48,6 +51,8 @@ class Player(Entity):
                 self.jump_key_released = False
                 self.calc_jump_point()
                 self.jump()
+                if not self.is_on_ground:
+                    self.switch_current_image_set('jump')
             else:
                 self.move_y = -1
 
@@ -55,13 +60,10 @@ class Player(Entity):
         if self.is_on_ground and self.jump_key_released:
             self.can_jump = True
 
-    def hidden_tick(self, delta_time):
+    def tick(self, delta_time):
         self.check_can_jump_again()
         self.handle_input()
-        super(Player, self).hidden_tick(delta_time)
-
-    def tick(self, delta_time):
-        pass
+        super(Player, self).tick(delta_time)
 
     def draw(self, renderer: pygame.Surface, camera: Camera):
         rect = self.current_image.get_rect(topleft=(self.x, self.y))

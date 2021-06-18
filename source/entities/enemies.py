@@ -5,14 +5,16 @@ import pygame
 
 class Enemy(Entity):
 	def __init__(self, hp, x, y, level_instance, images: dict, speed_x, initial_move_dir: int):
-		super().__init__(hp, x, y, level_instance, images, speed_x)
-		self.current_image = pygame.transform.scale2x(self.current_image)
-		self.collision = Box(self, self.current_image.get_rect(), CollisionChannel.Enemy)
+		super().__init__(hp, x, y, level_instance, images, images['move'], speed_x)
+		self.scale_all_images_by(3)
+		self.flip_all_images(False)
+		self.collision = Box(self, self.current_image.get_rect(), list([CollisionChannel.Enemy]))
+		self.hidden_collision = None
 		self.level_instance.collisions.append(self.collision)
 		self.move_x = initial_move_dir
-		self.flip_all_images(False)
 
 	def move_x_axis(self, value):
+		self.switch_current_image_set('move')
 		if not self.is_dead():
 			new_pos = self.x + value
 
