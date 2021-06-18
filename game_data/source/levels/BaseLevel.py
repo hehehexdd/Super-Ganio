@@ -13,7 +13,7 @@ class BaseLevel(CustomLevel):
     def __init__(self, instance, level_path):
         super().__init__(instance, level_path)
         self.roses_to_collect = 0
-        self.setup_assets(level_path, Ganio(2, 0, 0, self, BaseLevel.setup_resources('player')))
+        self.setup_assets(level_path, Ganio(1, 0, 0, self, BaseLevel.setup_resources('player')))
 
     def setup_assets(self, filename, player):
         super(BaseLevel, self).setup_assets(filename, player)
