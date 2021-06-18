@@ -1,5 +1,5 @@
-from source.engine.collision import Box
-from source.entities.base.entity import *
+from engine.base.collision import Box
+from engine.entities.base.entity import *
 import pygame
 
 
@@ -10,7 +10,7 @@ class Enemy(Entity):
 		self.flip_all_images(False)
 		from game_data.source.collisions.customcollisions import EnemyDamageBox
 		self.collision = EnemyDamageBox(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
-										{CollisionChannel.World: CollisionAction.Block, CollisionChannel.EnemyObstacle: CollisionAction.Block})
+										{CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.World: CollisionAction.Block, CollisionChannel.EnemyObstacle: CollisionAction.Block})
 		self.level_instance.collisions.append(self.collision)
 		self.move_x = initial_move_dir
 

@@ -1,4 +1,4 @@
-from source.levels.base.maplevel import *
+from engine.levels.base.maplevel import *
 from game_data.source.entities.ganio_player import *
 
 

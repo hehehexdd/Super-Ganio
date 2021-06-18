@@ -1,7 +1,7 @@
 from game_data.source.collisions.customcollisions import *
-from source.engine.map import Map
-from source.entities.player import *
-from source.engine.camera import *
+from engine.base.map import Map
+from engine.entities.player import *
+from engine.base.camera import *
 import os
 import pygame
 

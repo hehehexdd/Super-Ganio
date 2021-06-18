@@ -2,8 +2,8 @@ from game_data.source.buttons.exitbutton import *
 from game_data.source.buttons.playbutton import *
 from game_data.source.buttons.startlevelbutton import *
 from game_data.source.levels.BaseLevel import BaseLevel
-from source.levels.base.level import Level
-from source.widgets.widget import Widget
+from engine.levels.base.level import Level
+from engine.widgets.widget import Widget
 
 
 class MainMenu(Level):

@@ -1,6 +1,6 @@
 from game_data.source.collisions.customcollisions import ObjectiveBox
-from source.items.item import Item
-from source.entities.base.entity import Entity, CollisionChannel
+from engine.items.item import Item
+from engine.entities.base.entity import Entity, CollisionChannel
 import pygame
 
 

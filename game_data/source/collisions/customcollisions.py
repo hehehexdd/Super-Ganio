@@ -1,6 +1,6 @@
-from source.engine.collision import *
-from source.entities.enemies import Enemy
-from source.entities.player import Player
+from engine.base.collision import *
+from engine.entities.enemies import Enemy
+from engine.entities.player import Player
 
 
 class DeathBox(Box):

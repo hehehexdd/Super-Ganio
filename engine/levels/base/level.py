@@ -1,5 +1,5 @@
-from source.widgets.widget import *
-from source.entities.base.entity import *
+from engine.widgets.widget import *
+from engine.entities.base.entity import *
 
 
 class Level:

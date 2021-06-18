@@ -1,5 +1,5 @@
-from source.entities.base.entity import *
-from source.engine.collisioninfo import *
+from engine.entities.base.entity import *
+from engine.base.collisioninfo import *
 
 
 class Box:

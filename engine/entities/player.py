@@ -1,5 +1,5 @@
-from source.engine.collision import Box
-from source.levels.base.level import *
+from engine.base.collision import Box
+from engine.levels.base.level import *
 import time
 
 
