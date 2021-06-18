@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import IntEnum
 
 
-class CollisionChannel(Enum):
-    Entity = 0,
-    Player = 1,
-    Enemy = 2
+class CollisionChannel(IntEnum):
+    Player = 0,
+    Enemy = 1,
+    Entity = 2

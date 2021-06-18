@@ -12,57 +12,23 @@ class MapLevel(Level):
         self.map = None
         self.surface = None
 
-    def setup_assets(self, filename):
+    def setup_assets(self, filename, player):
         self.map = Map(filename)
         self.surface = self.map.make_map()
+        self.player = player
+
         if self.map:
             self.collisions = []
             for object_tile in self.map.tmxdata.objects:
                 if object_tile.type == 'collision':
                     if object_tile.name == 'death':
-                        self.custom_collisions.append(DeathBox(pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), CollisionChannel.Entity))
+                        self.collisions.append(DeathBox(pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height)))
                     elif object_tile.name == 'player':
-                        # player_animations = MapLevel.setup_player_resources()
-                        name = os.path.join(os.path.dirname(os.path.abspath("player.png")), 'game_data\\assets\\images\\player\\player.png')
-                        player_images = {
-                            "idle": [pygame.image.load(name)]
-                        }
-                        #     "idle": player_animations[0],
-                        #     "jump": player_animations[1],
-                        #     "move": player_animations[2]
-                        # }
                         self.camera = Camera(self.map.width, self.map.height, self.game_instance.window)
-                        self.player = Player(1, CollisionChannel.Player, object_tile.x, object_tile.y, self, player_images, 300)
-                    elif object_tile.name == 'rose':
-                        pass
-                    elif object_tile.name == 'enemy':
-                        pass
-                    else:
-                        self.collisions.append(pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height))
-
-    @staticmethod
-    def setup_player_resources():
-        idle_anims = []
-        dir_name = os.path.dirname(os.path.abspath("player.png"))
-        player_anim_path = os.path.join(dir_name, 'assets/images/player')
-        idle_anim_path = os.path.join(player_anim_path, "idle")
-        idle_anim_files = os.listdir(idle_anim_path)
-        for file in idle_anim_files:
-            idle_anims.append(pygame.image.load(os.path.join(idle_anim_path, file)))
-
-        jump_anims = []
-        jump_anim_path = os.path.join(player_anim_path, "jump")
-        jump_anim_files = os.listdir(jump_anim_path)
-        for file in jump_anim_files:
-            jump_anims.append(pygame.image.load(os.path.join(jump_anim_path, file)))
-
-        move_anims = []
-        move_anim_path = os.path.join(player_anim_path, "move")
-        move_anim_files = os.listdir(move_anim_path)
-        for file in move_anim_files:
-            move_anims.append(pygame.image.load(os.path.join(move_anim_path, file)))
-
-        return [idle_anims, jump_anims, move_anims]
+                        self.player.x = object_tile.x
+                        self.player.y = object_tile.y
+                    elif not object_tile.name:
+                        self.collisions.append(Box(None, pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), CollisionChannel.Entity))
 
     def draw(self, renderer):
         if self.camera:

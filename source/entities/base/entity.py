@@ -11,8 +11,10 @@ def clamp(value, min_val, max_val):
 
 
 class Entity:
-	def __init__(self, hp, collision_channel: CollisionChannel, x, y, level_instance, images: dict, speed_x):
+	def __init__(self, hp, x, y, level_instance, images: dict, speed_x):
+		self.items = []
 		self.level_instance = level_instance
+		self.collision = None
 		self.hp = hp
 		self.x = x
 		self.y = y
@@ -25,7 +27,6 @@ class Entity:
 		self.fly_mode = False
 		self.ghost_mode = False
 		self.is_on_ground = False
-		self.collision_channel = collision_channel
 		# jump vals v
 		self.can_jump = True
 		self.can_calc_jump_point = True
@@ -46,20 +47,19 @@ class Entity:
 			if not self.move_x == 0:
 				if not self.level_instance.check_collides_any(self, (new_pos, self.y)):
 					self.x = new_pos
+					self.collision.move(self.current_image.get_rect(topleft=(self.x, self.y)))
 
 	def move_y_axis(self, value):
 		if not self.is_dead():
 			new_pos = self.y + value
-			condition = True
-
-			if not self.move_y == 0:
-				condition = self.level_instance.check_collides_any(self, (self.x, new_pos))
+			condition = self.level_instance.check_collides_any(self, (self.x, new_pos))
 
 			if not self.fly_mode:
 				# if jumping
 				if value < 0:
 					if not condition and new_pos > self.max_jump_pos_y:
 						self.y = new_pos
+						self.collision.move(self.current_image.get_rect(topleft=(self.x, self.y)))
 						self.is_on_ground = False
 					else:
 						self.is_on_ground = False
@@ -70,11 +70,13 @@ class Entity:
 				# if not jumping
 				elif not condition:
 					self.y = new_pos
+					self.collision.move(self.current_image.get_rect(topleft=(self.x, self.y)))
 				else:
 					self.is_on_ground = True
 					self.can_calc_jump_point = True
 			elif not condition:
 				self.y = new_pos
+				self.collision.move(self.current_image.get_rect(topleft=(self.x, self.y)))
 
 	def jump(self):
 		if self.can_jump:
@@ -85,6 +87,19 @@ class Entity:
 		if self.can_calc_jump_point:
 			self.max_jump_pos_y = self.y - self.max_jump_height
 			self.can_calc_jump_point = False
+
+	def add_item_to_inventory(self, item):
+		self.items.append(item)
+
+	def on_item_add_to_inventory(self):
+		pass
+
+	def get_num_of_items_of_name(self, name):
+		count = 0
+		for item in self.items:
+			if item.name == name:
+				count += 1
+		return count
 
 	def handle_events(self, event):
 		pass

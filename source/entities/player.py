@@ -1,14 +1,16 @@
+from source.engine.collision import Box
 from source.levels.base.level import *
 
 
 class Player(Entity):
-    def __init__(self, hp, collision_channel: CollisionChannel, x, y, level_instance, images: dict, speed):
-        super().__init__(hp, collision_channel, x, y, level_instance, images, speed)
+    def __init__(self, hp, x, y, level_instance, images: dict):
+        super().__init__(hp, x, y, level_instance, images, 300)
         self.start_ticking = True
         self.start_moving = False
         self.start_moving_down = False
         self.current_image = pygame.transform.scale2x(self.current_image)
         self.jump_key_released = True
+        self.collision = Box(self, self.current_image.get_rect(), CollisionChannel.Player)
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:

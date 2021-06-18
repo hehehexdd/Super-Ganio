@@ -1,5 +1,5 @@
 from source.widgets.widget import *
-from source.entities.entity import *
+from source.entities.base.entity import *
 
 
 class Level:
@@ -55,15 +55,11 @@ class Level:
 
     def check_collides_any(self, entity: Entity, pos: list):
         rect = entity.current_image.get_rect(topleft=(pos[0], pos[1]))
-        # TODO switch custom_collisions with collisions and remove self.collisions.
-        if not self.player.ghost_mode:
-            for collision in self.collisions:
-                if collision.colliderect(rect):
+        for collision in self.collisions:
+            condition = collision.pre_collide(entity, pos)
+            if not self.player.ghost_mode:
+                if condition:
                     return True
-
-        for collision in self.custom_collisions:
-            if collision.check_collides(entity, pos):
-                break
 
         if self.player:
             if rect.left < 0:
