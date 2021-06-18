@@ -72,6 +72,7 @@ class Player(Entity):
     def kill(self):
         if not self.god_mode:
             super(Player, self).kill()
+            self.level_instance.game_instance.toggle_pause()
             pos = self.level_instance.game_instance.window.get_window_size()
             widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You died.", text_size=50, text_color=(255, 0, 0))
             self.level_instance.set_widget(widget)

@@ -16,6 +16,7 @@ class Game:
         self.delta_time = 0.0
         self.timer_functions = {}
         self.paused = False
+        self.fps = 0.0
 
     def start(self):
         self.running = True
