@@ -32,21 +32,25 @@ class BaseLevel(CustomLevel):
         images_path = os.path.join(assets_path, 'images')
         anim_path = os.path.join(dir_name, os.path.join(images_path, entity_name))
         idle_anim_path = os.path.join(anim_path, "idle")
-        idle_anim_files = os.listdir(idle_anim_path)
-        for file in idle_anim_files:
-            idle_anims.append(pygame.image.load(os.path.join(idle_anim_path, file)))
+        
+        if os.path.exists(idle_anim_path):
+            idle_anim_files = os.listdir(idle_anim_path)
+            for file in idle_anim_files:
+                idle_anims.append(pygame.image.load(os.path.join(idle_anim_path, file)))
 
         jump_anims = []
         jump_anim_path = os.path.join(anim_path, "jump")
-        jump_anim_files = os.listdir(jump_anim_path)
-        for file in jump_anim_files:
-            jump_anims.append(pygame.image.load(os.path.join(jump_anim_path, file)))
+        if os.path.exists(jump_anim_path):
+            jump_anim_files = os.listdir(jump_anim_path)
+            for file in jump_anim_files:
+                jump_anims.append(pygame.image.load(os.path.join(jump_anim_path, file)))
 
         move_anims = []
         move_anim_path = os.path.join(anim_path, "move")
-        move_anim_files = os.listdir(move_anim_path)
-        for file in move_anim_files:
-            move_anims.append(pygame.image.load(os.path.join(move_anim_path, file)))
+        if os.path.exists(move_anim_path):
+            move_anim_files = os.listdir(move_anim_path)
+            for file in move_anim_files:
+                move_anims.append(pygame.image.load(os.path.join(move_anim_path, file)))
 
         return {'idle': idle_anims, 'jump' : jump_anims, 'move': move_anims}
 
