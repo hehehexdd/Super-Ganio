@@ -10,7 +10,7 @@ class Ganio(Player):
         super().__init__(hp, x, y, level_instance, images)
         size = self.level_instance.game_instance.window.get_window_size()
         menu_widget = Widget((size[0] / 2, size[1] / 2), 50, 40)
-        menu_widget.add_button(BackButtonMethod(True, True, 'Back to Main Menu.', 60, owner=self.level_instance, custom_data=[self.level_instance.game_instance.restart]))
+        menu_widget.add_button(BackButtonMethod(True, True, 'Back to Main Menu', 60, owner=self.level_instance, custom_data=[self.level_instance.game_instance.restart]))
         self.level_instance.last_widget = menu_widget
 
     def handle_events(self, event):

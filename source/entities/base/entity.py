@@ -1,5 +1,5 @@
 from source.engine.camera import *
-from source.engine.collisionchannels import *
+from source.engine.collisioninfo import *
 
 
 def clamp(value, min_val, max_val):
@@ -28,7 +28,6 @@ class Entity:
 		self.move_x = 0
 		self.move_y = 0
 		self.fly_mode = False
-		self.ghost_mode = False
 		self.god_mode = False
 		self.is_on_ground = False
 		self.facing_right = True
@@ -168,8 +167,15 @@ class Entity:
 		self.move_x = 0
 		self.enable_gravity = False
 
-	def is_dead(self):
-		return self.hp <= 0
+	def hit(self):
+		if not self.god_mode:
+			self.hp -= 1
+			if self.is_dead():
+				self.kill()
 
 	def kill(self):
-		self.hp = 0
+		if not self.is_dead():
+			self.hp = 0
+
+	def is_dead(self):
+		return self.hp <= 0

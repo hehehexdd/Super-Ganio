@@ -1,5 +1,6 @@
 from source.engine.collision import Box
 from source.levels.base.level import *
+import time
 
 
 class Player(Entity):
@@ -7,7 +8,13 @@ class Player(Entity):
         super().__init__(hp, x, y, level_instance, images, images['idle'], 300)
         self.scale_all_images_by(2)
         self.jump_key_released = True
-        self.collision = Box(self, self.current_image.get_rect(), list([CollisionChannel.Player]))
+        self.collision = Box(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
+                             {CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.Objective: CollisionAction.Pass, CollisionChannel.Damage: CollisionAction.Pass,CollisionChannel.World: CollisionAction.Block})
+        self.level_instance.collisions.append(self.collision)
+        self.ghost_mode_collision = Box(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
+                             {CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.Objective: CollisionAction.Pass, CollisionChannel.World: CollisionAction.Pass})
+        self.time_was_hit = 0.0
+        self.invincibility_frames_seconds = 1
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
@@ -23,9 +30,14 @@ class Player(Entity):
                     self.enable_gravity = not self.enable_gravity
                 if event.key == pygame.K_g:
                     if self.fly_mode:
-                        self.ghost_mode = not self.ghost_mode
+                        self.toggle_collision()
                 if event.key == pygame.K_q:
                     self.god_mode = not self.god_mode
+
+    def toggle_collision(self):
+        temp = self.collision
+        self.collision = self.ghost_mode_collision
+        self.ghost_mode_collision = temp
 
     def handle_input(self):
         self.move_x = 0
@@ -70,6 +82,11 @@ class Player(Entity):
         if isinstance(camera, Camera):
             rect = camera.apply_rect(rect)
         renderer.blit(self.current_image, rect)
+
+    def hit(self):
+        if time.time() >= (self.time_was_hit + self.invincibility_frames_seconds):
+            super(Player, self).hit()
+            self.time_was_hit = time.time()
 
     def kill(self):
         if not self.god_mode:

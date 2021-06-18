@@ -1,16 +1,19 @@
 import os
 import pygame
 
+from source.engine.collisioninfo import *
 from game_data.source.entities.objectives import Rose
 from game_data.source.levels.base.customlevel import CustomLevel, Ganio
+from source.engine.collision import Box
 from source.entities.enemies import Enemy
+from source.widgets.widget import Widget
 
 
 class BaseLevel(CustomLevel):
     def __init__(self, instance, level_path):
         super().__init__(instance, level_path)
         self.roses_to_collect = 0
-        self.setup_assets(level_path, Ganio(1, 0, 0, self, BaseLevel.setup_resources('player')))
+        self.setup_assets(level_path, Ganio(2, 0, 0, self, BaseLevel.setup_resources('player')))
 
     def setup_assets(self, filename, player):
         super(BaseLevel, self).setup_assets(filename, player)
@@ -20,6 +23,8 @@ class BaseLevel(CustomLevel):
                 if object_tile.name == "rose":
                     self.entities.append(Rose(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rose')))
                     self.roses_to_collect += 1
+                if object_tile.name == "enemy":
+                    self.collisions.append(Box(None, pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), {CollisionChannel.EnemyObstacle: CollisionAction.Block}, {}))
             elif object_tile.type == 'enemy':
                 if object_tile.name == 'englishman':
                     self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('englishman'), 80, -1))
@@ -60,4 +65,11 @@ class BaseLevel(CustomLevel):
 
     def check_win_condition(self):
         if self.player.get_num_of_items_of_name('rose') >= self.roses_to_collect:
-            self.player.kill()
+            self.win()
+
+    def win(self):
+        self.game_instance.toggle_pause()
+        pos = self.game_instance.window.get_window_size()
+        widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You won!", text_size=50, text_color=(255, 0, 0))
+        self.set_widget(widget)
+        self.game_instance.set_timer(self.game_instance.restart, 1)

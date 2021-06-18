@@ -8,8 +8,9 @@ class Enemy(Entity):
 		super().__init__(hp, x, y, level_instance, images, images['move'], speed_x)
 		self.scale_all_images_by(3)
 		self.flip_all_images(False)
-		self.collision = Box(self, self.current_image.get_rect(), list([CollisionChannel.Enemy]))
-		self.hidden_collision = None
+		from game_data.source.collisions.customcollisions import EnemyDamageBox
+		self.collision = EnemyDamageBox(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
+										{CollisionChannel.World: CollisionAction.Block, CollisionChannel.EnemyObstacle: CollisionAction.Block})
 		self.level_instance.collisions.append(self.collision)
 		self.move_x = initial_move_dir
 
