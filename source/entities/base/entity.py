@@ -26,7 +26,9 @@ class Entity:
 		self.move_y = 0
 		self.fly_mode = False
 		self.ghost_mode = False
+		self.god_mode = False
 		self.is_on_ground = False
+		self.facing_right = True
 		# jump vals v
 		self.can_jump = True
 		self.can_calc_jump_point = True
@@ -90,6 +92,14 @@ class Entity:
 		if self.can_calc_jump_point:
 			self.max_jump_pos_y = self.y - self.max_jump_height
 			self.can_calc_jump_point = False
+
+	def flip_all_images(self, facing_right_now: bool):
+		if facing_right_now != self.facing_right:
+			for image_list_name in self.images:
+				for image in self.images[image_list_name]:
+					image = pygame.transform.flip(image, True, False)
+			self.current_image = pygame.transform.flip(self.current_image, True, False)
+			self.facing_right = not self.facing_right
 
 	def add_item_to_inventory(self, item):
 		self.items.append(item)

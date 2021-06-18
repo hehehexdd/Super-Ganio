@@ -24,6 +24,8 @@ class Player(Entity):
                 if event.key == pygame.K_g:
                     if self.fly_mode:
                         self.ghost_mode = not self.ghost_mode
+                if event.key == pygame.K_q:
+                    self.god_mode = not self.god_mode
 
     def handle_input(self):
         self.move_x = 0
@@ -32,8 +34,10 @@ class Player(Entity):
 
         if keys[pygame.K_a]:
             self.move_x = -1
+            self.flip_all_images(False)
         elif keys[pygame.K_d]:
             self.move_x = 1
+            self.flip_all_images(True)
         if self.fly_mode:
             if keys[pygame.K_w]:
                 self.move_y = -1
@@ -66,8 +70,9 @@ class Player(Entity):
         renderer.blit(self.current_image, rect)
 
     def kill(self):
-        super(Player, self).kill()
-        pos = self.level_instance.game_instance.window.get_window_size()
-        widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You died.", text_size=50, text_color=(255, 0, 0))
-        self.level_instance.set_widget(widget)
-        self.level_instance.game_instance.set_timer(self.level_instance.game_instance.restart, 1)
+        if not self.god_mode:
+            super(Player, self).kill()
+            pos = self.level_instance.game_instance.window.get_window_size()
+            widget = Widget((pos[0] / 2, pos[1] / 2), title_text="You died.", text_size=50, text_color=(255, 0, 0))
+            self.level_instance.set_widget(widget)
+            self.level_instance.game_instance.set_timer(self.level_instance.game_instance.restart, 1)
