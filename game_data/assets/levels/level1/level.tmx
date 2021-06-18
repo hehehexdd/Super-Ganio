@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="35" nextobjectid="123">
+<map version="1.5" tiledversion="1.6.0" orientation="orthogonal" renderorder="right-down" width="160" height="90" tilewidth="16" tileheight="16" infinite="0" nextlayerid="35" nextobjectid="124">
  <editorsettings>
   <export target="Level1.tmx" format="tmx"/>
  </editorsettings>
@@ -356,19 +356,20 @@
   <object id="105" name="rose" type="collision" x="1328" y="272" width="15.7936" height="32.1024" rotation="359.631"/>
   <object id="106" name="rose" type="collision" x="2336" y="560" width="15.7936" height="32.1024" rotation="359.631"/>
   <object id="107" name="rose" type="collision" x="1936" y="1152" width="15.7936" height="32.1024" rotation="359.631"/>
+  <object id="123" name="rat" type="enemy" x="736" y="1184" width="15.9739" height="15.678" rotation="359.631"/>
  </objectgroup>
  <objectgroup id="34" name="enemy_collision">
-  <object id="108" name="enemy" type="collision" x="672" y="1296" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="109" name="enemy" type="collision" x="1072" y="1296" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="110" name="enemy" type="collision" x="1328" y="1296" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="111" name="enemy" type="collision" x="1696" y="1168" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="112" name="enemy" type="collision" x="2096" y="1168" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="113" name="enemy" type="collision" x="1680" y="880" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="114" name="enemy" type="collision" x="1792" y="880" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="118" name="enemy" type="collision" x="1280" y="112" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="119" name="enemy" type="collision" x="1840" y="112" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="120" name="enemy" type="collision" x="432" y="416" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="121" name="enemy" type="collision" x="640" y="416" width="15.9739" height="15.678" rotation="359.631"/>
-  <object id="122" name="enemy" type="collision" x="1840" y="288" width="15.9739" height="15.678" rotation="359.631"/>
+  <object id="108" name="enemy" type="collision" x="671.794" y="1264.05" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="109" name="enemy" type="collision" x="1071.79" y="1264.03" width="15.9739" height="47.6516" rotation="359.631"/>
+  <object id="110" name="enemy" type="collision" x="1327.79" y="1264.05" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="111" name="enemy" type="collision" x="1695.79" y="1136.03" width="15.9739" height="47.6516" rotation="359.631"/>
+  <object id="112" name="enemy" type="collision" x="2095.79" y="1136.03" width="15.9739" height="47.6516" rotation="359.631"/>
+  <object id="113" name="enemy" type="collision" x="1679.79" y="848.079" width="15.9739" height="47.6001" rotation="359.631"/>
+  <object id="114" name="enemy" type="collision" x="1791.79" y="848.053" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="118" name="enemy" type="collision" x="1279.79" y="80.0528" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="119" name="enemy" type="collision" x="1839.79" y="80.0786" width="15.9739" height="47.6001" rotation="359.631"/>
+  <object id="120" name="enemy" type="collision" x="431.794" y="384.053" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="121" name="enemy" type="collision" x="639.794" y="384.053" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="122" name="enemy" type="collision" x="1839.79" y="256.053" width="15.9739" height="47.6258" rotation="359.631"/>
  </objectgroup>
 </map>
