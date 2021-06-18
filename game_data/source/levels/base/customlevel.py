@@ -1,5 +1,4 @@
-from engine.levels.base.maplevel import *
-from game_data.source.entities.ganio_player import *
+from game_data.engine.levels.base.maplevel import *
 
 
 class CustomLevel(MapLevel):

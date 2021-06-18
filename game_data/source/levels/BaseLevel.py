@@ -1,12 +1,13 @@
 import os
 import pygame
 
-from engine.base.collisioninfo import *
-from game_data.source.entities.objectives import Rose
-from game_data.source.levels.base.customlevel import CustomLevel, Ganio
-from engine.base.collision import Box
-from engine.entities.enemies import Enemy
-from engine.widgets.widget import Widget
+from game_data.engine.base.collisioninfo import *
+from game_data.source.entities.objectives import *
+from game_data.source.levels.base.customlevel import *
+from game_data.source.entities.ganio_player import *
+from game_data.engine.base.collision import *
+from game_data.engine.entities.enemies import *
+from game_data.engine.widgets.widget import *
 
 
 class BaseLevel(CustomLevel):

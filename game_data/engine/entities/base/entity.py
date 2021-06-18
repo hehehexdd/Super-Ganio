@@ -1,5 +1,4 @@
-from engine.base.camera import *
-from engine.base.collisioninfo import *
+from game_data.engine.base.camera import *
 
 
 def clamp(value, min_val, max_val):

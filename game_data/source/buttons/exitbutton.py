@@ -1,5 +1,4 @@
-from engine.base.game import *
-from engine.buttons.base.button import *
+from game_data.engine.buttons.base.button import *
 
 
 class ExitButton(Button):

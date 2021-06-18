@@ -1,4 +1,4 @@
-from engine.buttons.base.button import *
+from game_data.engine.buttons.base.button import *
 
 
 class BackButtonMethod(Button):

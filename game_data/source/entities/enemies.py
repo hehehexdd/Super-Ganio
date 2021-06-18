@@ -1,4 +1,4 @@
-from engine.entities.enemies import Enemy
+from game_data.engine.entities.enemies import Enemy
 
 
 class Rat(Enemy):

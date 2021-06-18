@@ -1,6 +1,5 @@
-from engine.base.collision import Box
-from engine.entities.base.entity import *
-import pygame
+from game_data.engine.entities.base.entity import *
+from game_data.engine.base.collisioninfo import *
 
 
 class Enemy(Entity):

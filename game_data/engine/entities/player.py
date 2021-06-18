@@ -1,5 +1,6 @@
-from engine.base.collision import Box
-from engine.levels.base.level import *
+from game_data.engine.base.collision import *
+from game_data.engine.levels.base.level import *
+from game_data.engine.base.collisioninfo import *
 import time
 
 

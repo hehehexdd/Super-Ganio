@@ -1,8 +1,7 @@
-from game_data.source.buttons.backbutton import BackButton
 from game_data.source.buttons.backbuttonmethod import BackButtonMethod
-from engine.entities.player import Player
+from game_data.engine.entities.player import Player
 import pygame
-from engine.widgets.widget import Widget
+from game_data.engine.widgets.widget import Widget
 
 
 class Ganio(Player):
