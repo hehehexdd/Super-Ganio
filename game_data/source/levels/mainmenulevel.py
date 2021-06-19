@@ -26,7 +26,7 @@ class MainMenu(Level):
         play_menu_widget.add_button(StartLevelButton(True, True, 'Level1', 60, owner=self, custom_data=[BaseLevel(self.game_instance, "./game_data/assets/levels/level1/level.tmx")]))
         play_menu_widget.add_button(StartLevelButton(True, True, 'Level2', 60, owner=self, custom_data=[BaseLevel(self.game_instance, "./game_data/assets/levels/level2/level.tmx")]))
         play_menu_widget.add_button(StartLevelButton(True, True, 'Level3', 60, owner=self, custom_data=[BaseLevel(self.game_instance, "./game_data/assets/levels/level3/level.tmx")]))
-        play_menu_widget.add_button(OpenFileBrowser(True, True, 'Load custom', 60, owner=self, custom_data=[BaseLevel(self.game_instance, ""), self.game_instance]))
+        play_menu_widget.add_button(OpenFileBrowser(True, True, 'Load custom', 60, owner=self, custom_data=[self.game_instance]))
         play_menu_widget.add_button(BackButtonWidget(True, True, 'Back', 60, owner=self, custom_data=[main_menu_widget]))
 
         self.background_color = (0, 100+50, 70+50)

@@ -160,5 +160,5 @@ class OpenFileBrowser(Button):
 
         tkinter.Tk().withdraw()
         file_name = filedialog.askopenfilename(title="Select a level", filetypes=(("Select a tiled map", "*.tmx"), ("Select a tiled map", "*.tmx")))
-        print(file_name)
-        self.custom_data[0].game_instance.move_to_level(self.custom_data[0].__class__(self.custom_data[1], file_name))
+        from game_data.source.levels.BaseLevel import BaseLevel
+        self.owner.game_instance.move_to_level(BaseLevel(self.custom_data[0], file_name))
