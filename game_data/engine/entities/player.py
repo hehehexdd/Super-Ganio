@@ -17,6 +17,7 @@ class Player(Entity):
         self.time_was_hit = 0.0
         self.invincibility_frames_seconds = 1
         self.can_use_space = True
+        self.force_max_point = 0.0
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
@@ -70,6 +71,11 @@ class Player(Entity):
             else:
                 self.move_y = -1
 
+    def add_force(self, value):
+        self.can_use_space = False
+        self.enable_gravity = False
+        self.force_max_point = self.y + value
+
     def check_can_jump_again(self):
         if self.is_on_ground and self.jump_key_released:
             self.can_jump = True
@@ -78,6 +84,9 @@ class Player(Entity):
         self.check_can_jump_again()
         self.handle_input()
         super(Player, self).tick(delta_time)
+
+    def added_force_check(self):
+        pass
 
     def draw(self, renderer: pygame.Surface, camera: Camera):
         rect = self.current_image.get_rect(topleft=(self.x, self.y))

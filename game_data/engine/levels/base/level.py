@@ -7,7 +7,6 @@ import os
 class Level:
     def __init__(self, instance: object):
         self.collisions = []
-        self.custom_collisions = []
         self.entities = []
         self.player = None
         self.camera = None
@@ -26,10 +25,6 @@ class Level:
                 self.current_widget.handle_event(ButtonEvent.Click, mouse_pos)
         if self.player:
             self.player.handle_events(event)
-        self.post_handle_events(event)
-
-    def post_handle_events(self, event: pygame.event.Event):
-        pass
 
     def tick(self, delta_time):
         if not self.game_instance.paused:
