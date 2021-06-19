@@ -359,17 +359,17 @@
   <object id="123" name="rat" type="enemy" x="736" y="1184" width="15.9739" height="15.678" rotation="359.631"/>
  </objectgroup>
  <objectgroup id="34" name="enemy_collision">
-  <object id="108" name="enemy" type="collision" x="671.794" y="1264.05" width="15.9739" height="47.6258" rotation="359.631"/>
-  <object id="109" name="enemy" type="collision" x="1071.79" y="1264.03" width="15.9739" height="47.6516" rotation="359.631"/>
-  <object id="110" name="enemy" type="collision" x="1327.79" y="1264.05" width="15.9739" height="47.6258" rotation="359.631"/>
-  <object id="111" name="enemy" type="collision" x="1695.79" y="1136.03" width="15.9739" height="47.6516" rotation="359.631"/>
-  <object id="112" name="enemy" type="collision" x="2095.79" y="1136.03" width="15.9739" height="47.6516" rotation="359.631"/>
-  <object id="113" name="enemy" type="collision" x="1679.79" y="848.079" width="15.9739" height="47.6001" rotation="359.631"/>
-  <object id="114" name="enemy" type="collision" x="1791.79" y="848.053" width="15.9739" height="47.6258" rotation="359.631"/>
-  <object id="118" name="enemy" type="collision" x="1279.79" y="80.0528" width="15.9739" height="47.6258" rotation="359.631"/>
-  <object id="119" name="enemy" type="collision" x="1839.79" y="80.0786" width="15.9739" height="47.6001" rotation="359.631"/>
-  <object id="120" name="enemy" type="collision" x="431.794" y="384.053" width="15.9739" height="47.6258" rotation="359.631"/>
-  <object id="121" name="enemy" type="collision" x="639.794" y="384.053" width="15.9739" height="47.6258" rotation="359.631"/>
-  <object id="122" name="enemy" type="collision" x="1839.79" y="256.053" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="108" name="enemy" type="collision" x="688" y="1264" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="109" name="enemy" type="collision" x="1056" y="1264" width="15.9739" height="47.6516" rotation="359.631"/>
+  <object id="110" name="enemy" type="collision" x="1344" y="1264" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="111" name="enemy" type="collision" x="1680" y="1136" width="15.9739" height="47.6516" rotation="359.631"/>
+  <object id="112" name="enemy" type="collision" x="2112" y="1136" width="15.9739" height="47.6516" rotation="359.631"/>
+  <object id="113" name="enemy" type="collision" x="1664" y="848" width="15.9739" height="47.6001" rotation="359.631"/>
+  <object id="114" name="enemy" type="collision" x="1808" y="848" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="118" name="enemy" type="collision" x="1264" y="80" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="119" name="enemy" type="collision" x="1856" y="80" width="15.9739" height="47.6001" rotation="359.631"/>
+  <object id="120" name="enemy" type="collision" x="416" y="384" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="121" name="enemy" type="collision" x="656" y="384" width="15.9739" height="47.6258" rotation="359.631"/>
+  <object id="122" name="enemy" type="collision" x="1856" y="256" width="15.9739" height="47.6258" rotation="359.631"/>
  </objectgroup>
 </map>
