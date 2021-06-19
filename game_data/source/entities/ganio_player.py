@@ -1,4 +1,4 @@
-from game_data.source.buttons.backbuttonmethod import BackButtonMethod
+from game_data.source.buttons.custombuttons import BackButtonMethod
 from game_data.engine.entities.player import Player
 import pygame
 from game_data.engine.widgets.widget import Widget
