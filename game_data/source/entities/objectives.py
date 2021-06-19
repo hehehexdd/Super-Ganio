@@ -11,6 +11,3 @@ class Rose(Entity):
         self.items.append(Item('rose'))
         self.collision = ObjectiveBox(self, self.current_image.get_rect(topleft=(self.x, self.y)))
         self.level_instance.collisions.append(self.collision)
-
-    def tick(self, delta_time):
-        super(Rose, self).tick(delta_time)
