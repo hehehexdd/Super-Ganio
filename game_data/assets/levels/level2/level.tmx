@@ -373,7 +373,7 @@
   <object id="100" name="rose" type="collision" x="2400" y="96" width="16" height="32"/>
   <object id="101" name="rose" type="collision" x="2368" y="1120" width="16" height="32"/>
   <object id="102" name="rose" type="collision" x="1200" y="1168" width="16" height="32"/>
-  <object id="103" name="rat" type="enemy" x="1792" y="912" width="16" height="16"/>
+  <object id="103" name="rat" type="enemy" x="1792" y="928" width="16" height="16"/>
   <object id="104" name="chicekn" type="enemy" x="576" y="912" width="16" height="16"/>
   <object id="105" name="englishman" type="enemy" x="2000" y="384" width="16" height="16"/>
   <object id="126" name="rose" type="collision" x="704" y="160" width="16" height="32"/>
