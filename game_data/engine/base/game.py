@@ -5,7 +5,8 @@ import time
 
 class Game:
     def __init__(self, window_size, default_background_color):
-        pygame.init()
+        if not pygame.get_init():
+            pygame.init()
         self.window = pygame.display
         self.window.set_caption("Super Ganio!")
         self.renderer = self.window.set_mode(window_size)

@@ -25,6 +25,8 @@ class Box:
         return False
 
     def check_collides(self, entity: Entity, new_pos: list, channel_infos):
+        const = 2
+        new_pos = (new_pos[0] - const, new_pos[1] - const)
         if self.rect.colliderect(entity.current_image.get_rect(topleft=new_pos)):
             self.on_collide(entity, new_pos, channel_infos)
             if channel_infos[0][1] == channel_infos[1][1] and channel_infos[0][1] == CollisionAction.Block:
