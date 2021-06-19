@@ -6,7 +6,6 @@ from game_data.engine.entities.base.entity import Entity
 class Rose(Entity):
     def __init__(self, hp, x, y, level_instance, images: dict):
         super().__init__(hp, x, y, level_instance, images, images['idle'], 0)
-        self.start_ticking = True
         self.enable_gravity = False
         self.can_jump = False
         self.items.append(Item('rose'))
