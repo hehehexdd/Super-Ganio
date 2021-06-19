@@ -11,7 +11,7 @@ class BaseLevel(CustomLevel):
         super().__init__(instance, level_path)
         self.roses_to_collect = 0
         self.level_path = level_path
-        self.setup_assets(level_path, Ganio(1, 0, 0, self, BaseLevel.setup_resources('player')))
+        self.setup_assets(level_path, Ganio(2, 0, 0, self, BaseLevel.setup_resources('player')))
 
     def setup_assets(self, filename, player):
         super(BaseLevel, self).setup_assets(filename, player)
@@ -26,11 +26,11 @@ class BaseLevel(CustomLevel):
                     self.collisions.append(Box(None, pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), {CollisionChannel.EnemyObstacle: CollisionAction.Block}, {}))
             elif object_tile.type == 'enemy':
                 if object_tile.name == 'englishman':
-                    self.entities.append(Enemy(2, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('englishman'), 80, -1))
+                    self.entities.append(Enemy(3, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('englishman'), 80, -1))
                 elif object_tile.name == 'rat':
                     self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rat'), 300, -1))
                 elif object_tile.name == 'chicken':
-                    self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('chicken'), 150, -1))
+                    self.entities.append(Enemy(2, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('chicken'), 150, -1))
 
     @staticmethod
     def setup_resources(entity_name):

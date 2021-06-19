@@ -3,8 +3,8 @@ import pygame
 
 
 if __name__ == '__main__':
-    # size = (1920, 1080)
-    # size = (1280, 720)
+    #size = (1920, 1080)
+    #size = (1280, 720)
     pygame.init()
     window_info = pygame.display.Info()
     size = (window_info.current_w, window_info.current_h)

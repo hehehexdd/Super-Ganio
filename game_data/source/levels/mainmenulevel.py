@@ -17,8 +17,8 @@ class MainMenu(Level):
 
         screen_size = self.game_instance.window.get_window_size()
 
-        main_menu_widget = Widget((screen_size[0] / 2, 350), 50, 100, "Super Ganio!", 80)
-        play_menu_widget = Widget((self.game_instance.window.get_window_size()[0] / 2, 250), 50, 100, "Select a Level", 80)
+        main_menu_widget = Widget((screen_size[0] / 2, screen_size[1] / 2 - 100), 50, 100, "Super Ganio!", 80)
+        play_menu_widget = Widget((self.game_instance.window.get_window_size()[0] / 2, screen_size[1] / 2 - 250), 50, 100, "Select a Level", 80)
 
         sprites_credits = Widget((screen_size[0] / 2 - 150, 50), 50, 100, "Art was inspired by:", 30)
         music_credits = Widget((screen_size[0] / 2 - 150, 90), 50, 100, "The music taken from:", 30)

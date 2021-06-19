@@ -30,3 +30,6 @@ class Ganio(Player):
 
     def on_item_add_to_inventory(self):
         self.level_instance.check_win_condition()
+        if self.get_num_of_items_of_name('rose') % 3 == 0:
+            if self.hp + 1 <= self.max_lives:
+                self.hp += 1

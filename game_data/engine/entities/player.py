@@ -95,17 +95,6 @@ class Player(Entity):
                 self.can_jump = True
                 self.can_use_space = True
                 self.can_calc_jump_point = True
-
-    def draw(self, renderer: pygame.Surface, camera: Camera):
-        rect = self.current_image.get_rect(topleft=(self.x, self.y))
-        if isinstance(camera, Camera):
-            rect = camera.apply_rect(rect)
-        renderer.blit(self.current_image, rect)
-
-    def hit(self):
-        if time.time() >= (self.time_was_hit + self.invincibility_frames_seconds):
-            super(Player, self).hit()
-            self.time_was_hit = time.time()
             
     def kill(self):
         if not self.god_mode:

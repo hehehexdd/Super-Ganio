@@ -16,8 +16,14 @@ class Entity:
 		self.level_instance = level_instance
 		self.collision = None
 		self.hp = hp
+		self.max_lives = self.hp + self.hp / 2
 		self.time_was_hit = 0.0
 		self.invincibility_frames_seconds = 1
+		self.blinking_time_start = 0.0
+		self.blinking_time_in_between = 0.2
+		self.start_blinking = False
+		self.should_blink = True
+		self.should_be_drawn = True
 		self.x = x
 		self.y = y
 		self.images = images
@@ -103,13 +109,9 @@ class Entity:
 			self.max_jump_pos_y = self.y - self.max_jump_height
 			self.can_calc_jump_point = False
 
-	def flip_all_images(self, facing_right_now: bool):
-		if facing_right_now != self.facing_right:
-			for image_list_name in self.images:
-				for i in range(len(self.images[image_list_name])):
-					self.images[image_list_name][i] = pygame.transform.flip(self.images[image_list_name][i], True, False)
-			self.current_image = pygame.transform.flip(self.current_image, True, False)
-			self.facing_right = not self.facing_right
+	def stop_movement(self):
+		self.move_x = 0
+		self.enable_gravity = False
 
 	def add_item_to_inventory(self, item):
 		self.items.append(item)
@@ -143,6 +145,14 @@ class Entity:
 		if image_set_name in self.images.keys():
 			self.current_image_set = self.images[image_set_name]
 
+	def flip_all_images(self, facing_right_now: bool):
+		if facing_right_now != self.facing_right:
+			for image_list_name in self.images:
+				for i in range(len(self.images[image_list_name])):
+					self.images[image_list_name][i] = pygame.transform.flip(self.images[image_list_name][i], True, False)
+			self.current_image = pygame.transform.flip(self.current_image, True, False)
+			self.facing_right = not self.facing_right
+
 	def animate(self):
 		if self.can_update_animation:
 			self.apply_animation()
@@ -159,25 +169,39 @@ class Entity:
 	def reset_animation(self):
 		self.can_update_animation = True
 
+	def apply_blink(self):
+		if time.time() >= (self.time_was_hit + self.invincibility_frames_seconds):
+			self.start_blinking = False
+			self.should_be_drawn = True
+		elif self.start_blinking:
+			if time.time() >= self.blinking_time_start + self.blinking_time_in_between:
+				self.blinking_time_start = time.time()
+				self.should_be_drawn = not self.should_be_drawn
+
+	def toggle_blinking(self):
+		self.start_blinking = True
+
 	def draw(self, renderer, camera):
+		self.apply_blink()
 		rect = self.current_image.get_rect(topleft=(self.x, self.y))
 		if isinstance(camera, Camera):
 			rect = camera.apply_rect(rect)
-		renderer.blit(self.current_image, rect)
-
-	def stop_movement(self):
-		self.move_x = 0
-		self.enable_gravity = False
+		if self.should_be_drawn:
+			renderer.blit(self.current_image, rect)
 
 	def hit(self):
 		if not self.god_mode:
-			self.hp -= 1
-			if self.is_dead():
-				self.kill()
+			if time.time() >= (self.time_was_hit + self.invincibility_frames_seconds):
+				if self.hp - 1 > 0:
+					self.hp -= 1
+					self.time_was_hit = time.time()
+					self.toggle_blinking()
+				else:
+					if not self.is_dead():
+						self.kill()
 
 	def kill(self):
-		if not self.is_dead():
-			self.hp = 0
+		self.hp = 0
 
 	def is_dead(self):
 		return self.hp <= 0
