@@ -25,9 +25,9 @@ class BaseLevel(CustomLevel):
                     self.collisions.append(Box(None, pygame.rect.Rect(object_tile.x, object_tile.y, object_tile.width, object_tile.height), {CollisionChannel.EnemyObstacle: CollisionAction.Block}, {}))
             elif object_tile.type == 'enemy':
                 if object_tile.name == 'englishman':
-                    self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('englishman'), 80, -1))
+                    self.entities.append(Enemy(2, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('englishman'), 80, -1))
                 elif object_tile.name == 'rat':
-                    self.entities.append(Enemy(2, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rat'), 300, -1))
+                    self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rat'), 300, -1))
                 elif object_tile.name == 'chicken':
                     self.entities.append(Enemy(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('chicken'), 150, -1))
 

@@ -14,10 +14,8 @@ class Player(Entity):
         self.level_instance.collisions.append(self.collision)
         self.dev_mode_collision = Box(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
                                       {CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.Objective: CollisionAction.Pass, CollisionChannel.World: CollisionAction.Pass})
-        self.time_was_hit = 0.0
-        self.invincibility_frames_seconds = 1
         self.can_use_space = True
-        self.force_max_point = 0.0
+        self.force_added = False
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
@@ -44,22 +42,23 @@ class Player(Entity):
 
     def handle_input(self):
         self.move_x = 0
-        self.move_y = 0
+        if self.can_use_space:
+            self.move_y = 0
         self.switch_current_image_set('idle')
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.move_x = -1
             self.switch_current_image_set('move')
             self.flip_all_images(False)
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.move_x = 1
             self.switch_current_image_set('move')
             self.flip_all_images(True)
         if self.fly_mode:
-            if keys[pygame.K_w]:
+            if keys[pygame.K_w] or keys[pygame.K_UP]:
                 self.move_y = -1
-            elif keys[pygame.K_s]:
+            elif keys[pygame.K_s] or keys[pygame.K_DOWN]:
                 self.move_y = 1
         if keys[pygame.K_SPACE] and self.can_use_space:
             if not self.fly_mode:
@@ -72,9 +71,12 @@ class Player(Entity):
                 self.move_y = -1
 
     def add_force(self, value):
+        self.can_calc_jump_point = False
+        self.force_added = True
         self.can_use_space = False
-        self.enable_gravity = False
-        self.force_max_point = self.y + value
+        self.max_jump_pos_y = (value * -1) + self.y
+        self.can_jump = True
+        self.jump()
 
     def check_can_jump_again(self):
         if self.is_on_ground and self.jump_key_released:
@@ -84,9 +86,15 @@ class Player(Entity):
         self.check_can_jump_again()
         self.handle_input()
         super(Player, self).tick(delta_time)
+        self.added_force_check(delta_time)
 
-    def added_force_check(self):
-        pass
+    def added_force_check(self, delta_time):
+        if self.force_added:
+            if self.is_on_ground:
+                self.force_added = False
+                self.can_jump = True
+                self.can_use_space = True
+                self.can_calc_jump_point = True
 
     def draw(self, renderer: pygame.Surface, camera: Camera):
         rect = self.current_image.get_rect(topleft=(self.x, self.y))
@@ -98,7 +106,7 @@ class Player(Entity):
         if time.time() >= (self.time_was_hit + self.invincibility_frames_seconds):
             super(Player, self).hit()
             self.time_was_hit = time.time()
-
+            
     def kill(self):
         if not self.god_mode:
             super(Player, self).kill()

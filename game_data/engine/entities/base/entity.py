@@ -1,4 +1,5 @@
 from game_data.engine.base.camera import *
+import time
 
 
 def clamp(value, min_val, max_val):
@@ -15,6 +16,8 @@ class Entity:
 		self.level_instance = level_instance
 		self.collision = None
 		self.hp = hp
+		self.time_was_hit = 0.0
+		self.invincibility_frames_seconds = 1
 		self.x = x
 		self.y = y
 		self.images = images

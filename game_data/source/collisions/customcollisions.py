@@ -28,8 +28,9 @@ class EnemyDamageBox(Box):
         super().__init__(entity, rect, self_collision_channels, target_collision_channels)
 
     def on_collide(self, entity: Entity, new_pos: list, channel):
+        entity: Player
         if entity.collision.rect.bottom - 4.0 < self.rect.top:
             self.entity.hit()
-            # TODO add bounce off
+            entity.add_force(100)
         else:
             entity.hit()
