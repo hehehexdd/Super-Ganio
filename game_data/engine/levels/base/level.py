@@ -10,19 +10,20 @@ class Level:
         self.entities = []
         self.player = None
         self.camera = None
-        self.current_widget = None
-        self.last_widget = None
+        self.widgets = []
         self.game_instance = instance
         self.background_color = (0, 0, 0, 255)
 
     def handle_events(self, event: pygame.event.Event):
         mouse_pos = pygame.mouse.get_pos()
         if event.type == pygame.MOUSEMOTION:
-            if self.current_widget is not None:
-                self.current_widget.handle_event(ButtonEvent.Hover, mouse_pos)
+            if self.widgets:
+                for widget in self.widgets:
+                    widget.handle_event(ButtonEvent.Hover, mouse_pos)
         if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.current_widget is not None:
-                self.current_widget.handle_event(ButtonEvent.Click, mouse_pos)
+            if self.widgets:
+                for widget in self.widgets:
+                    widget.handle_event(ButtonEvent.Click, mouse_pos)
         if self.player:
             self.player.handle_events(event)
 
@@ -45,8 +46,9 @@ class Level:
     def post_draw(self, renderer):
         self.draw(renderer)
 
-        if self.current_widget is not None:
-            self.current_widget.draw(self.game_instance.renderer)
+        if self.widgets:
+            for widget in self.widgets:
+                widget.draw(self.game_instance.renderer)
 
     def check_collides_any(self, entity: Entity, pos: list):
         rect = entity.current_image.get_rect(topleft=(pos[0], pos[1]))
@@ -65,10 +67,18 @@ class Level:
                 return True
         return False
 
-    def set_widget(self, widget: Widget):
-        self.last_widget = self.current_widget
-        self.current_widget = widget
+    def set_widget(self, widget: Widget, is_replacing=False):
+        if is_replacing:
+            self.widgets.clear()
+        self.widgets.append(widget)
 
-    def remove_widget(self):
-        self.current_widget = None
+    def remove_widget(self, widget_type: type(Widget)):
+        for widget in self.widgets:
+            if type(widget) == widget_type:
+                self.widgets.remove(widget)
 
+    def remove_top_widget(self):
+        self.widgets.remove(self.widgets[-1])
+
+    def clear_widgets(self):
+        self.widgets.clear()

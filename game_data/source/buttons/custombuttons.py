@@ -65,7 +65,8 @@ class BackButtonWidget(Button):
 
     def on_click(self):
         if self.custom_data:
-            self.owner.set_widget(self.custom_data[0])
+            for data in self.custom_data:
+                self.owner.set_widget(data, self.custom_data[data])
 
 
 class ExitButton(Button):
@@ -110,7 +111,7 @@ class PlayButton(Button):
 
     def on_click(self):
         if self.custom_data:
-            self.owner.set_widget(self.custom_data[0])
+            self.owner.set_widget(self.custom_data[0], True)
 
 
 class StartLevelButton(Button):
