@@ -8,7 +8,6 @@ class Box:
         self.entity = entity
         self.self_collision_channels = self_collision_channels
         self.target_collision_channels = target_collision_channels
-        self.should_skip = True
 
     def move(self, rect: pygame.Rect):
         self.rect = rect
