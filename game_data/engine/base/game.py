@@ -11,9 +11,6 @@ class Game:
         self.renderer = self.window.set_mode(window_size)
         self.music = pygame.mixer.music
         self.defaultBackgroundColor = default_background_color
-        abs_path = os.path.dirname(os.path.abspath("assets"))
-        abs_path = os.path.join(abs_path, 'game_data\\assets\\images\\background\\background.png')
-        self.defaultBackgroundColor = pygame.image.load(abs_path)
         self.running = False
         self.last_level = None
         self.current_level = None
@@ -68,9 +65,9 @@ class Game:
 
     def draw(self, renderer):
         if self.current_level:
-            renderer.blit(self.defaultBackgroundColor, self.defaultBackgroundColor.get_rect(center=(self.window.get_window_size()[0] / 2, self.window.get_window_size()[1] / 2)))
-        # else:
-        #     renderer.fill(self.defaultBackgroundColor)
+            renderer.fill(self.current_level.background_color)
+        else:
+            renderer.fill(self.defaultBackgroundColor)
 
         if self.current_level:
             self.current_level.post_draw(renderer)

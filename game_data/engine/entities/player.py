@@ -12,14 +12,15 @@ class Player(Entity):
         self.collision = Box(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
                              {CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.Objective: CollisionAction.Pass, CollisionChannel.Damage: CollisionAction.Pass,CollisionChannel.World: CollisionAction.Block})
         self.level_instance.collisions.append(self.collision)
-        self.ghost_mode_collision = Box(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
-                             {CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.Objective: CollisionAction.Pass, CollisionChannel.World: CollisionAction.Pass})
+        self.dev_mode_collision = Box(self, self.current_image.get_rect(), {CollisionChannel.Entity: CollisionAction.Pass},
+                                      {CollisionChannel.Death: CollisionAction.Pass, CollisionChannel.Objective: CollisionAction.Pass, CollisionChannel.World: CollisionAction.Pass})
         self.time_was_hit = 0.0
         self.invincibility_frames_seconds = 1
+        self.can_use_space = True
 
     def handle_events(self, event):
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_SPACE:
+            if event.key == pygame.K_SPACE and self.can_use_space:
                 if not self.fly_mode:
                     self.enable_gravity = True
                     self.can_jump = False
@@ -37,8 +38,8 @@ class Player(Entity):
 
     def toggle_collision(self):
         temp = self.collision
-        self.collision = self.ghost_mode_collision
-        self.ghost_mode_collision = temp
+        self.collision = self.dev_mode_collision
+        self.dev_mode_collision = temp
 
     def handle_input(self):
         self.move_x = 0
@@ -59,7 +60,7 @@ class Player(Entity):
                 self.move_y = -1
             elif keys[pygame.K_s]:
                 self.move_y = 1
-        if keys[pygame.K_SPACE]:
+        if keys[pygame.K_SPACE] and self.can_use_space:
             if not self.fly_mode:
                 self.jump_key_released = False
                 self.calc_jump_point()

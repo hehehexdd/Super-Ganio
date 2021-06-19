@@ -16,6 +16,7 @@ class BaseLevel(CustomLevel):
         super(BaseLevel, self).setup_assets(filename, player)
 
         for object_tile in self.map.tmxdata.objects:
+            # spawn objective and enemies
             if object_tile.type == 'collision':
                 if object_tile.name == "rose":
                     self.entities.append(Rose(1, object_tile.x, object_tile.y, self, BaseLevel.setup_resources('rose')))

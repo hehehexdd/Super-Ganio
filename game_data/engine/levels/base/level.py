@@ -3,6 +3,7 @@ from game_data.engine.entities.base.entity import *
 import pygame
 import os
 
+
 class Level:
     def __init__(self, instance: object):
         self.collisions = []
