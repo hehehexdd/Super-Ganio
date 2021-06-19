@@ -30,7 +30,7 @@ class EnemyDamageBox(Box):
     def on_collide(self, entity: Entity, new_pos: list, channel):
         entity: Player
         const = 10.0
-        if entity.collision.rect.bottom < self.rect.top + self.rect.height / 4 :
+        if entity.collision.rect.bottom < self.rect.top + self.rect.height / 4:
             self.entity.hit()
             entity.add_force(100)
         else:
