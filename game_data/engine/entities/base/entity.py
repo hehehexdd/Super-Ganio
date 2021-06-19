@@ -18,7 +18,7 @@ class Entity:
 		self.hp = hp
 		self.max_lives = self.hp + self.hp / 2
 		self.time_was_hit = 0.0
-		self.invincibility_frames_seconds = 1
+		self.invincibility_frames_seconds = 0.6
 		self.blinking_time_start = 0.0
 		self.blinking_time_in_between = 0.2
 		self.start_blinking = False
